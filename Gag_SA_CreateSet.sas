@@ -120,7 +120,7 @@ data gag;
 	*tables gear;
 run;
 
-data bystate;
+data gag;
 	set gag;
 	if triparea ge 3400 then state='NC'; 
 	else if    (triparea ge 3200 and triparea lt 3400) then state='SC';
@@ -128,18 +128,86 @@ data bystate;
 	else if    (triparea ge 2900 and triparea lt 3100) then state='NFL';
 	else if     triparea lt 2900 then state='SFL';
 
-    *proc freq;
-	*title 'Number of trips reporting gag';
-	*tables year*state;
+	if month ge 9 then season=3; 
+	else if    (month ge 5 and montha lt 9) then season=2;
+	else if    month<5 then season=1;
+
+
+    proc freq;
+	title 'Number of trips reporting gag';
+	tables year*state/ nopercent norow nocol;
 	
-	proc freq;
+	*proc freq;
 	*title 'Reported landings (pounds) of gag';
-	title 'Number trips reporting gag';
-	tables year*state / nopercent norow nocol out=gag_tab;
+	*title 'Number trips reporting gag';
+	*tables year*state / nopercent norow nocol out=gag_tab;
 	*weight totlbs;
 
      *proc print data=gag_tab;
 run;
+data gaglimit;
+	set gag;
+	if species=1423;
+	if gutted>900;
+run;
+
+proc freq data=gaglimit;
+	title 'Trips at 90% of gag limit';
+	tables year/ nopercent norow nocol;
+run;
+
+data gagtrips;
+	set gag;
+	if species=1423;
+	if (gear="H" or gear="E");
+	if (gear = "H" or gear = "E") then gear="H";
+	if numgear > 10 or numgear < 1 then delete;
+	if effort > 40 or effort < 1 then delete;
+	if crew > 12 then delete;
+	numgear1=round (numgear, 1);
+	effort1=round (effort, 1);
+	if numgear1 ne numgear or effort1 ne effort then delete;
+	if fished>0.0;
+run;
+
+data gagtrips;
+	set gagtrips;
+	toteffort=fished*effort*numgear;
+	cpue=totlbs/toteffort;
+run;
+
+proc freq data=gagtrips;
+	title 'Total trips';
+	tables year/ nopercent norow nocol;
+run;
+proc sort data=gagtrips;
+	by year season state;
+run;
+proc means data=gagtrips noprint;
+	by  year season state;  
+	*var caught weight; 
+    var gutted;
+    output out=landbymonth sum=;
+run;
+
+proc means data=gagtrips noprint;
+	by  year season state;  
+	*var caught weight; 
+    var cpue;
+    output out=cpuebyseason mean=;
+run;
+data gagtripstrim;
+	set gagtrips;
+	if month=5 or month=6 or month=7 or month=8 or month=9;
+run;
+
+	proc freq data=gagtripstrim;
+	title 'Total trips: May-Aug';
+	tables year*state/ nopercent norow nocol;
+run;
+
+
+
 
 data SAGag.sa_sg_clean_handline;
 	set SAGag.sa_sg;
