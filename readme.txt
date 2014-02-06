@@ -1,7 +1,8 @@
 readme.txt for analysis of commercial handline index for the 2014 gag update
 created 2/5/2014 Rob Cheshire
-last edit 2/5/2014 Rob Cheshire
+last edit 2/5/2014 Rob Cheshire (rob.cheshire@noaa.gov)
 version control through gitHub
+data and output files are confidential and cannot be published
 
 Summary of SEDAR 10 Decisions
 -Stephens MacCall Approach
@@ -13,7 +14,10 @@ Summary of SEDAR 10 Decisions
 -Years: 1992-2004
 
 Changes for 2014 update
--Years: 1993-2012
+- Evaluate 3 GLMs 
+	1. all months 1993-2009
+	2. May-Dec, 1993-2011
+	3. May-Sep, 1993-2012
 -3 Area factors defined as NC, SC, and GA+FL
 
 
@@ -28,4 +32,10 @@ Explore effect of 2010 January-April spawning closure.
 
 2014 Update Files
 W:\Data\logbookCONFIDENTIAL\logbook_05_13_13.sas7bdat (data input file)
+W:\SEDAR\Updates2014\Gag\Indicies\CommHL\Amend_13B_species.xlsx (Snapper-grouper species list used to limit species input to stephens and maccall method)
+
+2014 EDA Files (csv files with same name are output from SAS)
+W:\SEDAR\Updates2014\Gag\Indicies\CommHL\landbymonth.xlsx 
+W:\SEDAR\Updates2014\Gag\Indicies\CommHL\landbyseason.xlsx
+W:\SEDAR\Updates2014\Gag\Indicies\CommHL\cpuebyseason.xlsx
 
