@@ -1,0 +1,66 @@
+2014 Gag Commercial Handline Index of Abundance
+========================================================
+
+The 2014 update of the SEDAR 10 (2006) South Atlantic gag stock assessment requires recomputation of the commercial handline index of abundance.  The entire time series must be evaluated as recent trends will influence predictions for previous years.  This document describes changes to the methods as well as consideration of the influence of management decisions. 
+
+**Changes from the SEDAR 10 approach**
+
+1.  The Stephens and MacCall method for determining trips with effort in gag habitat but no catch was modified to exclude associated species with prolonged closures during part of the time series (red porgy and red snapper).  
+
+
+2.  The starting year for the index was changed from 1992 to 1993.  The 1992 commercial logbook data collection was voluntary.  For this reason 1992 has been excluded from all recent SEDAR assessed species.
+
+
+3.  The factor for region was aggregated over the Latitude-level used in SEDAR 10 to 3 levels (North Carolina, South Carolina, and Georgia-North Florida).  This change was mainly to accomodate smaller samples sizes for reduced data sets discussed below.
+
+
+4.  Management closures to the gag fishery occured for spawning (Jan-Apr) starting in 2010 and in October 2012 for the quota.  Three options for accounting for these changes were evaluated.  (The SEDAR 10 analysis excluded March and April due to a recreational bag limit imposed on commercial fisheries starting in 1999.) 
+
+  *method1: 1993-2009 including all months (most similar to SEDAR 10 index)
+  
+  *method2:  1993-2011 excluding Jan-Apr trips (allows for longer time series and accounts for spawning closure)
+  
+  *method3:  1993-2012 excluding Jan-Apr trips and Oct-Dec trips  (allows for full time series and removes bias associated with spawning closure and quota closure)
+
+
+
+
+
+
+
+```{r dataprep, warning=FALSE,message=FALSE,echo=FALSE}
+windows(record=T,w=7,h=5.5)
+require(doBy)
+require(xtable)
+input='W:/SEDAR/Updates2014/Gag/Indicies/CommHL'
+s10indexYr=1993:2004
+s10index=c(0.944,0.907,0.937,1.001,0.768,0.951,1.017,0.912,0.867,1.006,1.342,1.44)
+s10indexPred=c(0.86,1.03,1.06,0.92,0.83,0.86,0.98,1.02,0.95,1.05,1.24,1.32)
+gagtrips=read.csv(paste(input,'landbymonth.csv',sep='/'),header=TRUE)
+#create trip sample size for each method
+method1=summaryBy(X_FREQ_~year,data=gagtrips,FUN=sum)
+colnames(method1)=c('year','method1')
+for(i in 1:dim(method1)[1]){
+if(method1$year[i]>2009){method1$method1[i]='NA'}
+}
+method2=summaryBy(X_FREQ_~year,data=gagtrips[gagtrips$month%in%5:12,],FUN=sum)
+colnames(method2)=c('year','method2')
+for(i in 1:dim(method2)[1]){
+if(method2$year[i]>2011){method2$method2[i]='NA'}
+}
+method3=summaryBy(X_FREQ_~year,data=gagtrips[gagtrips$month%in%c(5,6,7,8,9),],FUN=sum)
+colnames(method3)=c('year','method3')
+
+
+```
+
+**Table 1.** Commercial handline trips through 2009 for all months (method1), through 2011 without Jan-Apr (method2), and through 2012 with only May-Sep (method3).
+
+```{r,results='asis',echo=FALSE}
+sstable=cbind(method1$year,method1$method1,method2$method2,method3$method3)
+sstable=as.data.frame.matrix(sstable)
+colnames(sstable)=c('year','method1','method2','method3')
+sstable=xtable(sstable,digits=0,display=c('d','d','d','d','d'),align=c('r','r','r','r','r'))
+print(sstable,type="html",include.rownames=FALSE)
+```
+
