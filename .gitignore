@@ -220,3 +220,4 @@ pip-log.txt
 *.sas
 *.xls
 *.xlsx
+.Rproj.user
