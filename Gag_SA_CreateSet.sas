@@ -112,7 +112,6 @@ data SAGag.sa_sg;
 	*tables gear;
 run;
 
-*###################################RAN to HERE#####################################;
 data gag;
 	set SAGag.sa_sg;
 	if species=1423 or species=1422; 
@@ -236,7 +235,7 @@ data SAGag.trip_species;
 run;
 
 
-
+*end here 2/6/2014################################################################
 
 data SAGag.sa_sg_handline_U;
 	set SAGag.sa_sg_clean_handline;
