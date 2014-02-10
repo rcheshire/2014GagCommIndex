@@ -108,13 +108,33 @@ data SAGag.sa_sg;
 	if year = 2013 then delete;
 	if year = 1991 then delete;
 	if year = 1992 then delete;
+	if triparea ge 3400 then state='NC'; 
+	else if    (triparea ge 3200 and triparea lt 3400) then state='SC';
+	else if    (triparea ge 2900 and triparea lt 3200) then state='GN';
+	else if     triparea lt 2900 then state='SFL';
+
+	if month ge 9 then season=3; 
+	else if    (month ge 5 and montha lt 9) then season=2;
+	else if    month<5 then season=1;
 	*proc freq order=freq;
 	*tables gear;
 run;
 
-data gag;
+data sa_sg;
 	set SAGag.sa_sg;
-	if species=1423 or species=1422; 
+    if month = 3 or month = 4 then delete;  *drop months;
+	if species=1422 then species=1423;      *convert black to gag;
+	if triparea lt 2900 then delete;        *delete areas south of Cape Canaveral;
+	proc sort; by schedule species;
+	proc means noprint; by schedule species;
+	id year month triparea state gear numgear effort fished crew;
+	var totlbs;
+	output out=sa_sg_nb sum=;
+run;
+
+data gag;
+	set sa_sg_nb;
+	if species=1423; 
 	*proc freq order=freq;
 	*tables gear;
 run;
@@ -123,8 +143,7 @@ data gag;
 	set gag;
 	if triparea ge 3400 then state='NC'; 
 	else if    (triparea ge 3200 and triparea lt 3400) then state='SC';
-	else if    (triparea ge 3100 and triparea lt 3200) then state='GA';
-	else if    (triparea ge 2900 and triparea lt 3100) then state='NFL';
+	else if    (triparea ge 2900 and triparea lt 3200) then state='GN';
 	else if     triparea lt 2900 then state='SFL';
 
 	if month ge 9 then season=3; 
@@ -144,6 +163,7 @@ data gag;
 
      *proc print data=gag_tab;
 run;
+*############# Evaluate Trip Limit #####################;
 data gaglimit;
 	set gag;
 	if species=1423;
@@ -209,7 +229,7 @@ run;
 
 
 data SAGag.sa_sg_clean_handline;
-	set SAGag.sa_sg;
+	set sa_sg_nb;
 	if (gear="H" or gear="E");
 	if (gear = "H" or gear = "E") then gear="H";
 	if numgear > 10 or numgear < 1 then delete;
@@ -229,122 +249,22 @@ data SAGag.trip_species;
 	keep schedule species;
 	proc sort; by schedule;
 	proc export data=SAGag.trip_species 
-				outfile="C:\Assessments\SEDAR 10\Data\commercial\logbook\SA\tripspecies.csv"
+				outfile="W:\SEDAR\Updates2014\Gag\Indicies\CommHL\tripspecies.csv"
 				dbms=csv
 				replace;
 run;
 
 
-*end here 2/6/2014################################################################
 
 data SAGag.sa_sg_handline_U;
 	set SAGag.sa_sg_clean_handline;
-	hookhrs = numgear*effort*fished;
-	*hookdays=numgear*effort*away;
+	hookhrs=fished*effort*numgear;
 	cpue=totlbs/hookhrs;
-	keep schedule species cpue year month triparea;
+	keep schedule species cpue year month state season;
 	proc sort; by schedule;
 	proc export data=SAGag.sa_sg_handline_U 
-				outfile="C:\Assessments\SEDAR 10\Data\commercial\logbook\SA\SA.SG.hline.U.csv"
+				outfile="W:\SEDAR\Updates2014\Gag\Indicies\CommHL\SA.SG.hline.U.csv"
 				dbms=csv
 				replace;
 run;
 
-*----------------------------------------------------------;
-
-*Create data set by trip, with 0 cpue for trips without gag;
-/*
-data SAGag.gag_only;
-	set SAGag.sa_sg_handline_U;
-	if species=1423;
-	proc sort; 
-		by schedule;
-run;
-data gag_pos;
-	set SAGag.gag_only;	
-	dummy=0;
-	keep schedule dummy;
-	proc sort; by schedule;
-run;
-data all_ones;
-	set SAgag.sa_sg_handline_U;
-	dummy=1;
-	proc sort; by schedule;	
-run;
-
-data all_spp;
-	set all_ones;
-	by schedule;
-	if first.schedule;
-run;
-
-data gag_zeros;
-	merge all_spp gag_pos;
-	by schedule;
-	if dummy=0 then delete;
-	cpue = 0;
-	species=1423;
-run;
-
-data SAGag.gag_handline_U;
-	set gag_zeros SAGag.gag_only;
-	keep schedule cpue year month triparea;
-	proc sort; by schedule;
-	
-run;
-*/
-
-*------black grouper catches ---------------------------------------;
-
-data black_grouper;
-	set SAGag.sa_sg;
-	if species=1422; 
-	*proc freq order=freq;
-	*tables gear;
-run;
-data bg_bystate;
-	set black_grouper;
-	if triparea ge 3400 then state='NC'; 
-	else if    (triparea ge 3200 and triparea lt 3400) then state='SC';
-	else if    (triparea ge 3100 and triparea lt 3200) then state='GA';
-	else if    (triparea ge 2900 and triparea lt 3100) then state='NFL';
-	else if     triparea lt 2900 then state='SFL';
-
-    *proc freq;
-    *title 'Number of trips reporting black grouper';
-	*tables year*state;
-
-	proc freq;
-	*title 'Reported landings (pounds) of black grouper';
-	title 'Number trips reporting black grouper';
-	tables year*state  / nopercent norow nocol out=bg_tab;
-	*weight totlbs;
-
-	*proc print data=bg_tab;
-
-run;
-
-data bg_bystate2;
-     set bg_bystate;
-	 bg_totlbs=totlbs;
-	 drop totlbs;
-     proc sort; by schedule;
-run;
-
-data bystate2;
-	 set bystate;
-     gag_totlbs=totlbs;
-	 drop totlbs;
-     proc sort; by schedule;
-run;
-
-
-data trips_both_spp;
-	merge bg_bystate2 bystate2; by schedule;
-    if bg_totlbs>0 and gag_totlbs>0; 
-    proc freq;
-	title 'Number trips reporting gag and black';
-	tables year*state  / nopercent norow nocol out=both_tab;
-run;
-
-quit;
