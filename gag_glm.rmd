@@ -38,7 +38,7 @@ s10index=c(0.944,0.907,0.937,1.001,0.768,0.951,1.017,0.912,0.867,1.006,1.342,1.4
 s10indexPred=c(0.86,1.03,1.06,0.92,0.83,0.86,0.98,1.02,0.95,1.05,1.24,1.32)
 gagtrips=read.csv(paste(input,'landbymonth.csv',sep='/'),header=TRUE)
 #create trip sample size for each method
-method1=summaryBy(X_FREQ_~year,data=gagtrips,FUN=sum)
+method1=summaryBy(X_FREQ_~year,data=gagtrips[gagtrips$month%in%c(1,4,5,6,7,8,9,10,11,12),],FUN=sum)
 colnames(method1)=c('year','method1')
 for(i in 1:dim(method1)[1]){
 if(method1$year[i]>2009){method1$method1[i]='NA'}
