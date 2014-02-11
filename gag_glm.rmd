@@ -11,7 +11,7 @@ The 2014 update of the SEDAR 10 (2006) South Atlantic gag stock assessment requi
 2.  The starting year for the index was changed from 1992 to 1993.  The 1992 commercial logbook data collection was voluntary.  For this reason 1992 has been excluded from all recent SEDAR assessed species.
 
 
-3.  The factor for region was aggregated over the Latitude-level used in SEDAR 10 to 3 levels (North Carolina, South Carolina, and Georgia-North Florida).  This change was mainly to accomodate smaller samples sizes for reduced data sets discussed below.
+3.  The factor for region was aggregated over the Latitude-level used in SEDAR 10 to 3 levels (North Carolina, South Carolina, and Georgia-North Florida).  This change was made to accomodate smaller samples sizes for reduced data sets discussed below.
 
 
 4.  Management closures to the gag fishery occured for spawning (Jan-Apr) starting in 2010 and in October 2012 for the quota.  Three options for accounting for these changes were evaluated.  (The SEDAR 10 analysis excluded March and April due to a recreational bag limit imposed on commercial fisheries starting in 1999.) 

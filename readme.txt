@@ -1,6 +1,6 @@
 readme.txt for analysis of commercial handline index for the 2014 gag update
 created 2/5/2014 Rob Cheshire
-last edit 2/5/2014 Rob Cheshire (rob.cheshire@noaa.gov)
+last edit 2/11/2014 Rob Cheshire (rob.cheshire@noaa.gov)
 version control through gitHub
 data and output files are confidential and cannot be published
 
@@ -38,4 +38,8 @@ W:\SEDAR\Updates2014\Gag\Indicies\CommHL\Amend_13B_species.xlsx (Snapper-grouper
 W:\SEDAR\Updates2014\Gag\Indicies\CommHL\landbymonth.xlsx 
 W:\SEDAR\Updates2014\Gag\Indicies\CommHL\landbyseason.xlsx
 W:\SEDAR\Updates2014\Gag\Indicies\CommHL\cpuebyseason.xlsx
+
+Order of files to reproduce analysis
+1.  Gag_SA_CreateSet.SAS  (need to change paths for input output (libname and output paths), CONFIDENTIALITY ISSUES)
+2.  gag_glm.rmd  (need to change paths for input/output in header, CONFIDENTIALITY ISSUES)
 
