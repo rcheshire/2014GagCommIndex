@@ -221,3 +221,4 @@ pip-log.txt
 *.xls
 *.xlsx
 .Rproj.user
+.Rhistory
