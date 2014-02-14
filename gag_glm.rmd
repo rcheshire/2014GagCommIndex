@@ -5,7 +5,7 @@ The 2014 update of the SEDAR 10 (2006) South Atlantic gag stock assessment requi
 
 **Changes from the SEDAR 10 approach**
 
-1.  The Stephens and MacCall method for determining trips with effort in gag habitat but no catch was modified to exclude associated species with prolonged closures during part of the time series (red porgy and red snapper).  
+1.  The Stephens and MacCall method for determining trips with effort in gag habitat but no catch was modified to exclude associated species with prolonged closures during part of the time series (red porgy and red snapper). The species used as factors to determine the probability of catching gag in a trip was defined as those caught in 1% of trips.  SEDAR 10 used a 5% cutoff.  
 
 
 2.  The starting year for the index was changed from 1992 to 1993.  The 1992 commercial logbook data collection was voluntary.  For this reason 1992 has been excluded from all recent SEDAR assessed species.
@@ -32,6 +32,8 @@ The 2014 update of the SEDAR 10 (2006) South Atlantic gag stock assessment requi
 windows(record=T,w=7,h=5.5)
 require(doBy)
 require(xtable)
+library(matlab)
+source('sort.data.frame.r')
 input='W:/SEDAR/Updates2014/Gag/Indicies/CommHL'
 s10indexYr=1993:2004
 s10index=c(0.944,0.907,0.937,1.001,0.768,0.951,1.017,0.912,0.867,1.006,1.342,1.44)
@@ -64,3 +66,35 @@ sstable=xtable(sstable,digits=0,display=c('d','d','d','d','d'),align=c('r','r','
 print(sstable,type="html",include.rownames=FALSE)
 ```
 
+```{r,echo=FALSE}
+###########Create Binary Matrix for Stephens and MacCall#####
+dat=read.csv('tripspecies.csv',header=T)
+NMFSspp.codes=read.csv('NMFSsppcodes.csv',header=T)
+spp.codes=sort.data.frame(NMFSspp.codes,~sppcode)
+
+trips=unique(dat$SCHEDULE)
+spp.id=spp.codes$sppcode
+spp.name=spp.codes$name
+
+mat=matrix(0, nrow=length(trips),ncol=length(spp.id),
+              dimnames=list(trip=trips,names=spp.name))
+#instead of ind, this could be done using the fcn "match"
+ind=1
+for (j in 1:length(spp.id)) {
+    if (dat$species[1]==spp.id[j]) mat[ind,j]=1
+}
+tic()
+for (i in 2:nrow(dat)) {
+    if (dat$SCHEDULE[i]!=dat$SCHEDULE[i-1]) {
+        ind=ind+1
+    }
+    for (j in 1:length(spp.id)) {
+           if (dat$species[i]==spp.id[j]) mat[ind,j]=1
+    }
+
+}
+toc()
+tic()
+write.table(mat,file='lgbk.dat',quote=F,sep=",")
+toc()
+```
