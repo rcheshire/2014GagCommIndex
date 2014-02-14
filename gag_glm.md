@@ -34,7 +34,7 @@ The 2014 update of the SEDAR 10 (2006) South Atlantic gag stock assessment requi
 **Table 1.** Commercial handline trips through 2009 for all months (method1), through 2011 without Jan-Apr (method2), and through 2012 with only May-Sep (method3).
 
 <!-- html table generated in R 3.0.2 by xtable 1.7-1 package -->
-<!-- Fri Feb 14 12:33:11 2014 -->
+<!-- Fri Feb 14 14:36:09 2014 -->
 <TABLE border=1>
 <TR> <TH> year </TH> <TH> method1 </TH> <TH> method2 </TH> <TH> method3 </TH>  </TR>
   <TR> <TD align="right"> 1993 </TD> <TD align="right"> 1757 </TD> <TD align="right"> 1524 </TD> <TD align="right"> 996 </TD> </TR>
@@ -62,21 +62,60 @@ The 2014 update of the SEDAR 10 (2006) South Atlantic gag stock assessment requi
 
 
 ```
-## elapsed time is 143.600000 seconds
+## elapsed time is 133.150000 seconds
 ```
 
 ```
-## elapsed time is 27.660000 seconds
+## elapsed time is 13.560000 seconds
 ```
 
-Figure 1.  Estimates of species-specific regression coefficients used to estimate a trip's probability of catching gag.
+Figure 1.  Method 1:  Estimates of species-specific regression coefficients used to estimate a trip's probability of catching gag.
 
 
 
-![plot of chunk regcoeffPlot](figure/regcoeffPlot.png) 
+![plot of chunk regcoeffPlotm1](figure/regcoeffPlotm1.png) 
 
-Figure 2.  Absolute difference between observed and predicted number of positive gag trips.  Top and bottom panels differ only in the range of probabilities shown.
+Figure 2.  Method 1:  Absolute difference between observed and predicted number of positive gag trips.  Left and right panels differ only in the range of probabilities shown.
 
-![plot of chunk probability](figure/probability.png) 
+![plot of chunk probabilitym1](figure/probabilitym1.png) 
+
+
+
+```
+## elapsed time is 123.200000 seconds
+```
+
+```
+## elapsed time is 12.440000 seconds
+```
+
+Figure 3.  Method 2: Estimates of species-specific regression coefficients used to estimate a trip's probability of catching gag.
+
+
+
+![plot of chunk regcoeffPlotm2](figure/regcoeffPlotm2.png) 
+
+Figure 4.  Method 2: Absolute difference between observed and predicted number of positive gag trips.  Left and right panels differ only in the range of probabilities shown.
+
+![plot of chunk probabilitym2](figure/probabilitym2.png) 
+
+
+```
+## elapsed time is 87.900000 seconds
+```
+
+```
+## elapsed time is 8.760000 seconds
+```
+
+Figure 5.  Method 3: Estimates of species-specific regression coefficients used to estimate a trip's probability of catching gag.
+
+
+
+![plot of chunk regcoeffPlotm3](figure/regcoeffPlotm3.png) 
+
+Figure 6.  Method 3: Absolute difference between observed and predicted number of positive gag trips.  Left and right panels differ only in the range of probabilities shown.
+
+![plot of chunk probabilitym3](figure/probabilitym3.png) 
 
 
