@@ -30,9 +30,11 @@ The 2014 update of the SEDAR 10 (2006) South Atlantic gag stock assessment requi
 
 ```{r dataprep, warning=FALSE,message=FALSE,echo=FALSE}
 windows(record=T,w=7,h=5.5)
+library(MASS)
 require(doBy)
 require(xtable)
 library(matlab)
+setwd("W:/SEDAR/Updates2014/Gag/Indicies/CommHL")
 source('sort.data.frame.r')
 input='W:/SEDAR/Updates2014/Gag/Indicies/CommHL'
 s10indexYr=1993:2004
@@ -58,7 +60,7 @@ colnames(method3)=c('year','method3')
 
 **Table 1.** Commercial handline trips through 2009 for all months (method1), through 2011 without Jan-Apr (method2), and through 2012 with only May-Sep (method3).
 
-```{r,results='asis',echo=FALSE}
+```{r sample size, results='asis',echo=FALSE}
 sstable=cbind(method1$year,method1$method1,method2$method2,method3$method3)
 sstable=as.data.frame.matrix(sstable)
 colnames(sstable)=c('year','method1','method2','method3')
@@ -66,7 +68,7 @@ sstable=xtable(sstable,digits=0,display=c('d','d','d','d','d'),align=c('r','r','
 print(sstable,type="html",include.rownames=FALSE)
 ```
 
-```{r,echo=FALSE}
+```{r binaryMatrix, echo=FALSE}
 ###########Create Binary Matrix for Stephens and MacCall#####
 dat=read.csv('tripspecies.csv',header=T)
 NMFSspp.codes=read.csv('NMFSsppcodes.csv',header=T)
@@ -97,4 +99,106 @@ toc()
 tic()
 write.table(mat,file='lgbk.dat',quote=F,sep=",")
 toc()
+
+#Fit logistic regression to select trips that may have caught focal species
+#Implement method from Stephens and McCall.2004. Fisheries Research.
+#Kyle Shertzer, 10/24/05
+#Last updated, 2/13/2014
+#2014 gag update - RTC
+
+graphics.off()
+#rm(list=ls(all=TRUE))
+bin.dat=mat
+colnames(bin.dat)=make.names(colnames(bin.dat))
+bin.dat=as.data.frame.matrix(bin.dat)
+#read.csv("BinaryMatrix_HLM.csv", header=TRUE)
+bin.dat[is.na(bin.dat)] <- 0
+# Remove red snapper and red porgy due to closures
+bin.dat=subset(bin.dat,select=-c(Red.snapper,Red.porgy))
+
+
+
+################## regression coefficients by species###
+
+target.spp="Gag"
+target.spp2="Gag"
+target.code=1423
+
+incidence=data.frame(freq=colSums(bin.dat[,-1],na.rm=TRUE))
+incidence$prop.trps=incidence$freq/sum(incidence$freq)
+
+#----define species to be used in GLM-----                 
+#minimal proportion of trips in which a species is caught
+cutoff=0.01     #0.05
+incidence=incidence[incidence$prop.trps>cutoff,]
+mat2=bin.dat[,rownames(incidence)]
+mat2=as.data.frame.matrix(mat2)
+#creage scatter plot of target to other species 
+#look for combinations with no overlap and remove
+windows(height=8,width=10,record=T)
+par(mfrow=c(2,4))
+for(i in 2:dim(mat2)[2]){
+with(mat2,plot(jitter(Gag),jitter(mat2[,i]),ylab=colnames(mat2[i]), xlab=target.spp))
+}
+
+
+#species removed (usually because they never co-occur with target species)
+#species to remove: 
+#mat2=mat2[,-c(4)]
+#mat2=cbind(bin.dat$SCHEDULE,mat2)
+totals=colSums(mat2,na.rm=TRUE)
 ```
+Figure 1.  Estimates of species-specific regression coefficients used to estimate a trip's probability of catching gag.
+```{r regcoeff,echo=FALSE}
+##incidence2=data.frame(name=spp.name[incidence$prop.trps>cutoff],
+##            freq=totals,prop.trps=totals/nrow(mat2))
+###incidence2.sort=orderBy(~freq,incidence2)
+##sp.names=spp.name[incidence$prop.trps>cutoff]
+#
+
+#-----fit binomial GLM-----
+mat2.df=data.frame(mat2)
+id=1:length(colnames(mat2.df))
+id.target= id[colnames(mat2.df)==target.spp]
+terms.glm=""
+for (i in 1:length(id)) {
+    if (i!=id.target){
+      if (i==1) terms.glm=paste(terms.glm,colnames(mat2.df)[i],sep="")
+      else terms.glm=paste(terms.glm,colnames(mat2.df)[i],sep="+")
+    }
+}
+#fit the model and use step-wise AIC to choose species to include
+model=paste(colnames(mat2.df)[id.target],terms.glm,sep="~")
+glm.start <- glm(formula=as.formula(model),family="binomial", data=mat2.df)
+glm.step <- stepAIC(glm.start,scope=list(upper = paste('~',terms.glm),lower = ~1),direction="backward")
+fit=glm.step
+#fit=glm(formula=as.formula(model),family=binomial, data=mat2.df)
+
+coeff=sort(fit$coefficients[-1], decreasing=T)
+windows(width=10,height=8,record=T)
+par(las=2,cex.lab=1.0,oma=c(0,15,0,0))
+barplot(coeff,horiz=T,xlim=c(-2.0,2), xlab='Regression coefficient')
+savePlot(file="sppcorr.pdf",type="pdf")
+savePlot(file="sppcorr.png",type="png")
+
+```
+Figure 2.  Absolute difference between observed and predicted number of positive gag trips.  Top and bottom panels differ only in the range of probabilities shown.
+
+```{r probability,echo=FALSE}
+#-----evaluate predictions/ choose trips ------------
+gt.func=function(x) length(fit$fitted.values[fit$fitted.values>x])
+prob.trp=seq(0,1,by=0.001)
+num.postrips.pred=rep(0,length(prob.trp))
+for (i in 1:length(prob.trp)){num.postrips.pred[i]=gt.func(prob.trp[i])}
+
+abs.dif=abs(num.postrips.pred-totals[target.spp])
+windows(width=8,height=4,record=T)
+par(mfcol=c(1,2),mar=c(4,4,1.5,0.5),las=2)
+plot(prob.trp,abs.dif/1000,type="l",xlab="Probability",main="",ylab="Abs. error (1000)")
+min.prob=mean(prob.trp[abs.dif==min(abs.dif)]) #mean in case min is not unique
+plot(prob.trp[600:620],abs.dif[600:620]/1000,type="l",
+     xlab="Probability", ylab="Abs. error (1000)")
+savePlot(file="minimum.pdf",type="pdf")
+savePlot(file="minimum.png",type="png")
+```
+

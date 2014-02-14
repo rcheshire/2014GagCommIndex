@@ -5,13 +5,13 @@ The 2014 update of the SEDAR 10 (2006) South Atlantic gag stock assessment requi
 
 **Changes from the SEDAR 10 approach**
 
-1.  The Stephens and MacCall method for determining trips with effort in gag habitat but no catch was modified to exclude associated species with prolonged closures during part of the time series (red porgy and red snapper).  
+1.  The Stephens and MacCall method for determining trips with effort in gag habitat but no catch was modified to exclude associated species with prolonged closures during part of the time series (red porgy and red snapper). The species used as factors to determine the probability of catching gag in a trip was defined as those caught in 1% of trips.  SEDAR 10 used a 5% cutoff.  
 
 
 2.  The starting year for the index was changed from 1992 to 1993.  The 1992 commercial logbook data collection was voluntary.  For this reason 1992 has been excluded from all recent SEDAR assessed species.
 
 
-3.  The factor for region was aggregated over the Latitude-level used in SEDAR 10 to 3 levels (North Carolina, South Carolina, and Georgia-North Florida).  This change was mainly to accomodate smaller samples sizes for reduced data sets discussed below.
+3.  The factor for region was aggregated over the Latitude-level used in SEDAR 10 to 3 levels (North Carolina, South Carolina, and Georgia-North Florida).  This change was made to accomodate smaller samples sizes for reduced data sets discussed below.
 
 
 4.  Management closures to the gag fishery occured for spawning (Jan-Apr) starting in 2010 and in October 2012 for the quota.  Three options for accounting for these changes were evaluated.  (The SEDAR 10 analysis excluded March and April due to a recreational bag limit imposed on commercial fisheries starting in 1999.) 
@@ -34,7 +34,7 @@ The 2014 update of the SEDAR 10 (2006) South Atlantic gag stock assessment requi
 **Table 1.** Commercial handline trips through 2009 for all months (method1), through 2011 without Jan-Apr (method2), and through 2012 with only May-Sep (method3).
 
 <!-- html table generated in R 3.0.2 by xtable 1.7-1 package -->
-<!-- Tue Feb 11 10:05:21 2014 -->
+<!-- Fri Feb 14 09:20:51 2014 -->
 <TABLE border=1>
 <TR> <TH> year </TH> <TH> method1 </TH> <TH> method2 </TH> <TH> method3 </TH>  </TR>
   <TR> <TD align="right"> 1993 </TD> <TD align="right"> 1757 </TD> <TD align="right"> 1524 </TD> <TD align="right"> 996 </TD> </TR>
@@ -58,5 +58,154 @@ The 2014 update of the SEDAR 10 (2006) South Atlantic gag stock assessment requi
   <TR> <TD align="right"> 2011 </TD> <TD align="right"> NA </TD> <TD align="right"> 1473 </TD> <TD align="right"> 986 </TD> </TR>
   <TR> <TD align="right"> 2012 </TD> <TD align="right"> NA </TD> <TD align="right"> NA </TD> <TD align="right"> 1088 </TD> </TR>
    </TABLE>
+
+
+
+```
+## Warning: cannot open file 'tripspecies.csv': No such file or directory
+```
+
+```
+## Error: cannot open the connection
+```
+
+```
+## Warning: cannot open file 'NMFSsppcodes.csv': No such file or directory
+```
+
+```
+## Error: cannot open the connection
+```
+
+```
+## Error: object 'NMFSspp.codes' not found
+```
+
+```
+## Error: object 'dat' not found
+```
+
+```
+## Error: object 'spp.codes' not found
+```
+
+```
+## Error: object 'spp.codes' not found
+```
+
+```
+## Error: object 'trips' not found
+```
+
+```
+## Error: object 'spp.id' not found
+```
+
+```
+## Error: object 'dat' not found
+```
+
+```
+## elapsed time is 0.000000 seconds
+```
+
+```
+## Error: object 'mat' not found
+```
+
+```
+## elapsed time is 0.000000 seconds
+```
+
+```
+## Error: object 'mat' not found
+```
+
+```
+## Error: object 'bin.dat' not found
+```
+
+```
+## Error: object 'bin.dat' not found
+```
+
+```
+## Error: object 'bin.dat' not found
+```
+
+```
+## Error: object 'bin.dat' not found
+```
+
+```
+## Error: object 'bin.dat' not found
+```
+
+```
+## Error: object 'incidence' not found
+```
+
+```
+## Error: object 'incidence' not found
+```
+
+```
+## Error: object 'bin.dat' not found
+```
+
+```
+## Error: object 'mat2' not found
+```
+
+```
+## Error: object 'mat2' not found
+```
+
+```
+## Error: object 'mat2' not found
+```
+
+Figure 1.  Estimates of species-specific regression coefficients used to estimate a trip's probability of catching gag.
+
+```
+## Error: object 'mat2' not found
+```
+
+```
+## Error: object 'mat2.df' not found
+```
+
+```
+## Error: object 'id' not found
+```
+
+```
+## Error: object 'id' not found
+```
+
+```
+## Error: object 'mat2.df' not found
+```
+
+```
+## Error: object 'model' not found
+```
+
+```
+## Error: object 'glm.start' not found
+```
+
+```
+## Error: object 'glm.step' not found
+```
+
+```
+## Error: object 'fit' not found
+```
+
+```
+## Error: object 'coeff' not found
+```
+
 
 
