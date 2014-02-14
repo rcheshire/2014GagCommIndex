@@ -34,7 +34,7 @@ The 2014 update of the SEDAR 10 (2006) South Atlantic gag stock assessment requi
 **Table 1.** Commercial handline trips through 2009 for all months (method1), through 2011 without Jan-Apr (method2), and through 2012 with only May-Sep (method3).
 
 <!-- html table generated in R 3.0.2 by xtable 1.7-1 package -->
-<!-- Fri Feb 14 09:20:51 2014 -->
+<!-- Fri Feb 14 12:33:11 2014 -->
 <TABLE border=1>
 <TR> <TH> year </TH> <TH> method1 </TH> <TH> method2 </TH> <TH> method3 </TH>  </TR>
   <TR> <TD align="right"> 1993 </TD> <TD align="right"> 1757 </TD> <TD align="right"> 1524 </TD> <TD align="right"> 996 </TD> </TR>
@@ -62,150 +62,21 @@ The 2014 update of the SEDAR 10 (2006) South Atlantic gag stock assessment requi
 
 
 ```
-## Warning: cannot open file 'tripspecies.csv': No such file or directory
+## elapsed time is 143.600000 seconds
 ```
 
 ```
-## Error: cannot open the connection
-```
-
-```
-## Warning: cannot open file 'NMFSsppcodes.csv': No such file or directory
-```
-
-```
-## Error: cannot open the connection
-```
-
-```
-## Error: object 'NMFSspp.codes' not found
-```
-
-```
-## Error: object 'dat' not found
-```
-
-```
-## Error: object 'spp.codes' not found
-```
-
-```
-## Error: object 'spp.codes' not found
-```
-
-```
-## Error: object 'trips' not found
-```
-
-```
-## Error: object 'spp.id' not found
-```
-
-```
-## Error: object 'dat' not found
-```
-
-```
-## elapsed time is 0.000000 seconds
-```
-
-```
-## Error: object 'mat' not found
-```
-
-```
-## elapsed time is 0.000000 seconds
-```
-
-```
-## Error: object 'mat' not found
-```
-
-```
-## Error: object 'bin.dat' not found
-```
-
-```
-## Error: object 'bin.dat' not found
-```
-
-```
-## Error: object 'bin.dat' not found
-```
-
-```
-## Error: object 'bin.dat' not found
-```
-
-```
-## Error: object 'bin.dat' not found
-```
-
-```
-## Error: object 'incidence' not found
-```
-
-```
-## Error: object 'incidence' not found
-```
-
-```
-## Error: object 'bin.dat' not found
-```
-
-```
-## Error: object 'mat2' not found
-```
-
-```
-## Error: object 'mat2' not found
-```
-
-```
-## Error: object 'mat2' not found
+## elapsed time is 27.660000 seconds
 ```
 
 Figure 1.  Estimates of species-specific regression coefficients used to estimate a trip's probability of catching gag.
 
-```
-## Error: object 'mat2' not found
-```
 
-```
-## Error: object 'mat2.df' not found
-```
 
-```
-## Error: object 'id' not found
-```
+![plot of chunk regcoeffPlot](figure/regcoeffPlot.png) 
 
-```
-## Error: object 'id' not found
-```
+Figure 2.  Absolute difference between observed and predicted number of positive gag trips.  Top and bottom panels differ only in the range of probabilities shown.
 
-```
-## Error: object 'mat2.df' not found
-```
-
-```
-## Error: object 'model' not found
-```
-
-```
-## Error: object 'glm.start' not found
-```
-
-```
-## Error: object 'glm.step' not found
-```
-
-```
-## Error: object 'fit' not found
-```
-
-```
-## Error: object 'coeff' not found
-```
-
+![plot of chunk probability](figure/probability.png) 
 
 

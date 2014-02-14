@@ -34,7 +34,6 @@ library(MASS)
 require(doBy)
 require(xtable)
 library(matlab)
-setwd("W:/SEDAR/Updates2014/Gag/Indicies/CommHL")
 source('sort.data.frame.r')
 input='W:/SEDAR/Updates2014/Gag/Indicies/CommHL'
 s10indexYr=1993:2004
@@ -60,7 +59,7 @@ colnames(method3)=c('year','method3')
 
 **Table 1.** Commercial handline trips through 2009 for all months (method1), through 2011 without Jan-Apr (method2), and through 2012 with only May-Sep (method3).
 
-```{r sample size, results='asis',echo=FALSE}
+```{r sample size, warning=FALSE,message=FALSE,results='asis',echo=FALSE}
 sstable=cbind(method1$year,method1$method1,method2$method2,method3$method3)
 sstable=as.data.frame.matrix(sstable)
 colnames(sstable)=c('year','method1','method2','method3')
@@ -68,10 +67,10 @@ sstable=xtable(sstable,digits=0,display=c('d','d','d','d','d'),align=c('r','r','
 print(sstable,type="html",include.rownames=FALSE)
 ```
 
-```{r binaryMatrix, echo=FALSE}
+```{r binaryMatrix,warning=FALSE,message=FALSE, echo=FALSE}
 ###########Create Binary Matrix for Stephens and MacCall#####
-dat=read.csv('tripspecies.csv',header=T)
-NMFSspp.codes=read.csv('NMFSsppcodes.csv',header=T)
+dat=read.csv('W:/SEDAR/Updates2014/Gag/Indicies/CommHL/tripspecies.csv',header=T)
+NMFSspp.codes=read.csv('W:/SEDAR/Updates2014/Gag/Indicies/CommHL/NMFSsppcodes.csv',header=T)
 spp.codes=sort.data.frame(NMFSspp.codes,~sppcode)
 
 trips=unique(dat$SCHEDULE)
@@ -97,7 +96,7 @@ for (i in 2:nrow(dat)) {
 }
 toc()
 tic()
-write.table(mat,file='lgbk.dat',quote=F,sep=",")
+write.table(mat,file='W:/SEDAR/Updates2014/Gag/Indicies/CommHL/lgbk.dat',quote=F,sep=",")
 toc()
 
 #Fit logistic regression to select trips that may have caught focal species
@@ -106,7 +105,7 @@ toc()
 #Last updated, 2/13/2014
 #2014 gag update - RTC
 
-graphics.off()
+#graphics.off()
 #rm(list=ls(all=TRUE))
 bin.dat=mat
 colnames(bin.dat)=make.names(colnames(bin.dat))
@@ -135,11 +134,11 @@ mat2=bin.dat[,rownames(incidence)]
 mat2=as.data.frame.matrix(mat2)
 #creage scatter plot of target to other species 
 #look for combinations with no overlap and remove
-windows(height=8,width=10,record=T)
-par(mfrow=c(2,4))
-for(i in 2:dim(mat2)[2]){
-with(mat2,plot(jitter(Gag),jitter(mat2[,i]),ylab=colnames(mat2[i]), xlab=target.spp))
-}
+# windows(height=8,width=10,record=T)
+# par(mfrow=c(2,4))
+# for(i in 2:dim(mat2)[2]){
+# with(mat2,plot(jitter(Gag),jitter(mat2[,i]),ylab=colnames(mat2[i]), xlab=target.spp))
+# }
 
 
 #species removed (usually because they never co-occur with target species)
@@ -149,7 +148,7 @@ with(mat2,plot(jitter(Gag),jitter(mat2[,i]),ylab=colnames(mat2[i]), xlab=target.
 totals=colSums(mat2,na.rm=TRUE)
 ```
 Figure 1.  Estimates of species-specific regression coefficients used to estimate a trip's probability of catching gag.
-```{r regcoeff,echo=FALSE}
+```{r regcoeff,warning=FALSE,message=FALSE,echo=FALSE,results='hide'}
 ##incidence2=data.frame(name=spp.name[incidence$prop.trps>cutoff],
 ##            freq=totals,prop.trps=totals/nrow(mat2))
 ###incidence2.sort=orderBy(~freq,incidence2)
@@ -175,6 +174,9 @@ fit=glm.step
 #fit=glm(formula=as.formula(model),family=binomial, data=mat2.df)
 
 coeff=sort(fit$coefficients[-1], decreasing=T)
+```
+
+```{r regcoeffPlot,warning=FALSE,message=FALSE,echo=FALSE}
 windows(width=10,height=8,record=T)
 par(las=2,cex.lab=1.0,oma=c(0,15,0,0))
 barplot(coeff,horiz=T,xlim=c(-2.0,2), xlab='Regression coefficient')
@@ -184,7 +186,7 @@ savePlot(file="sppcorr.png",type="png")
 ```
 Figure 2.  Absolute difference between observed and predicted number of positive gag trips.  Top and bottom panels differ only in the range of probabilities shown.
 
-```{r probability,echo=FALSE}
+```{r probability,warning=FALSE,message=FALSE,echo=FALSE}
 #-----evaluate predictions/ choose trips ------------
 gt.func=function(x) length(fit$fitted.values[fit$fitted.values>x])
 prob.trp=seq(0,1,by=0.001)
