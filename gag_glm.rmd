@@ -36,9 +36,11 @@ require(xtable)
 library(matlab)
 source('sort.data.frame.r')
 input='W:/SEDAR/Updates2014/Gag/Indicies/CommHL'
+#cpue values from SEDAR10
 s10indexYr=1993:2004
 s10index=c(0.944,0.907,0.937,1.001,0.768,0.951,1.017,0.912,0.867,1.006,1.342,1.44)
 s10indexPred=c(0.86,1.03,1.06,0.92,0.83,0.86,0.98,1.02,0.95,1.05,1.24,1.32)
+#  read in data set created by SAS
 gagtrips=read.csv(paste(input,'landbymonth.csv',sep='/'),header=TRUE)
 #create trip sample size for each method
 method1=summaryBy(X_FREQ_~year,data=gagtrips[gagtrips$month%in%c(1,4,5,6,7,8,9,10,11,12),],FUN=sum)
@@ -205,6 +207,28 @@ plot(prob.trp[550:650],abs.dif[550:650]/1000,type="l",
 savePlot(file="minimum.pdf",type="pdf")
 savePlot(file="minimum.png",type="png")
 ```
+
+```{r probabilitym1,warning=FALSE,message=FALSE,echo=FALSE}
+trips.pred=mat2.df[fit$fitted.values>min.prob,]
+select.trips=c(rownames(trips.pred))
+
+#-----Create data set for running delta-lognormal GLM ------------
+dat.all.U=read.csv('W:/SEDAR/Updates2014/Gag/Indicies/CommHL/sa.sg.hline.U.csv',header=T)
+# limit to only trips above cutoff value 
+dat.select.U=dat.all.U[as.numeric(dat.all.U$SCHEDULE) %in% as.numeric(select.trips),]
+#change catch to 0 for trips with no gag, limit to just 1 record per trip
+for(i in 1:dim(dat.select.U)[1]){
+if(dat.select.U$species[i]==1423){
+    dat.select.U$dum.ind[i]=1
+} else {dat.select.U$dum.ind[i]=0;dat.select.U$cpue[i]=0}
+}
+
+
+dat.select.U=dat.select.U[!duplicated(dat.select.U[, c("SCHEDULE", "dum.ind")]), ]
+
+dat.select.U=dat.select.U[with(dat.select.U, order(SCHEDULE, -cpue)), ]
+```
+
 
 ```{r binaryMatrixm2,warning=FALSE,message=FALSE, echo=FALSE}
 ####################METHOD 2.  May,Jun,JUl,Aug,Sept,Oct,Nov,Dec through 2011##########
