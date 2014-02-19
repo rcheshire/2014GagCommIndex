@@ -222,3 +222,6 @@ pip-log.txt
 *.xlsx
 .Rproj.user
 .Rhistory
+.html
+.pdf
+.md
