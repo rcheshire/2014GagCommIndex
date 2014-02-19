@@ -200,7 +200,7 @@ windows(width=8,height=4,record=T)
 par(mfcol=c(1,2),mar=c(4,4,1.5,0.5),las=2)
 plot(prob.trp,abs.dif/1000,type="l",xlab="Probability",main="",ylab="Abs. error (1000)")
 min.prob=mean(prob.trp[abs.dif==min(abs.dif)]) #mean in case min is not unique
-plot(prob.trp[600:620],abs.dif[600:620]/1000,type="l",
+plot(prob.trp[550:650],abs.dif[550:650]/1000,type="l",
      xlab="Probability", ylab="Abs. error (1000)")
 savePlot(file="minimum.pdf",type="pdf")
 savePlot(file="minimum.png",type="png")
@@ -336,11 +336,12 @@ windows(width=8,height=4,record=T)
 par(mfcol=c(1,2),mar=c(4,4,1.5,0.5),las=2)
 plot(prob.trp,abs.dif/1000,type="l",xlab="Probability",main="",ylab="Abs. error (1000)")
 min.prob=mean(prob.trp[abs.dif==min(abs.dif)]) #mean in case min is not unique
-plot(prob.trp[600:620],abs.dif[600:620]/1000,type="l",
+plot(prob.trp[550:650],abs.dif[550:650]/1000,type="l",
      xlab="Probability", ylab="Abs. error (1000)")
 savePlot(file="minimum2.pdf",type="pdf")
 savePlot(file="minimum2.png",type="png")
 ```
+
 ```{r binaryMatrixm3,warning=FALSE,message=FALSE, echo=FALSE}
 
 ####################METHOD 2.  May,Jun,JUl,Aug,Sept,Oct,Nov,Dec through 2011##########
@@ -472,7 +473,7 @@ windows(width=8,height=4,record=T)
 par(mfcol=c(1,2),mar=c(4,4,1.5,0.5),las=2)
 plot(prob.trp,abs.dif/1000,type="l",xlab="Probability",main="",ylab="Abs. error (1000)")
 min.prob=mean(prob.trp[abs.dif==min(abs.dif)]) #mean in case min is not unique
-plot(prob.trp[600:620],abs.dif[600:620]/1000,type="l",
+plot(prob.trp[550:650],abs.dif[550:650]/1000,type="l",
      xlab="Probability", ylab="Abs. error (1000)")
 savePlot(file="minimum3.pdf",type="pdf")
 savePlot(file="minimum3.png",type="png")
