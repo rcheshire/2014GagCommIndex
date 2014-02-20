@@ -220,8 +220,8 @@ pip-log.txt
 *.sas
 *.xls
 *.xlsx
-.Rproj.user
-.Rhistory
-.html
-.pdf
-.md
+*.Rproj.user
+*.Rhistory
+*.html
+*.pdf
+*.md
