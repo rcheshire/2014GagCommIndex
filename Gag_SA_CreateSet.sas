@@ -113,9 +113,6 @@ data SAGag.sa_sg;
 	else if    (triparea ge 2900 and triparea lt 3200) then state='GN';
 	else if     triparea lt 2900 then state='SFL';
 
-	if month ge 9 then season=3; 
-	else if    (month ge 5 and montha lt 9) then season=2;
-	else if    month<5 then season=1;
 	*proc freq order=freq;
 	*tables gear;
 run;
@@ -145,10 +142,6 @@ data gag;
 	else if    (triparea ge 3200 and triparea lt 3400) then state='SC';
 	else if    (triparea ge 2900 and triparea lt 3200) then state='GN';
 	else if     triparea lt 2900 then state='SFL';
-
-	if month ge 9 then season=3; 
-	else if    (month ge 5 and montha lt 9) then season=2;
-	else if    month<5 then season=1;
 
 
     proc freq;
@@ -225,7 +218,7 @@ run;
 	tables year*state/ nopercent norow nocol;
 run;
 
-
+*#################################################;
 
 
 data SAGag.sa_sg_clean_handline;
@@ -239,6 +232,8 @@ data SAGag.sa_sg_clean_handline;
 	effort1=round (effort, 1);
 	if numgear1 ne numgear or effort1 ne effort then delete;
 	if fished>0.0;
+	hookhrs=fished*effort*numgear;
+	cpue=totlbs/hookhrs;
 	*proc freq order=freq;
 	*tables gear;
 run;
@@ -254,15 +249,30 @@ data SAGag.trip_species;
 				replace;
 run;
 
+data gag_pos;
+	set SAGag.sa_sg_clean_handline;	
+	if species=1423 then cpue=cpue;
+	else cpue=0;
+	if species=1423 then dummy=0;
+	else dummy=1;
+	*keep schedule dummy;
+	proc sort; by schedule dummy;
+run;
 
+data gag_zeros;
+	set gag_pos;
+	by schedule dummy;
+	if first.schedule;
+	species=1423;
+run;
 
-data SAGag.sa_sg_handline_U;
-	set SAGag.sa_sg_clean_handline;
-	hookhrs=fished*effort*numgear;
-	cpue=totlbs/hookhrs;
-	keep schedule species cpue year month state season;
-	proc sort; by schedule;
-	proc export data=SAGag.sa_sg_handline_U 
+data gag_handline_U (keep=schedule species cpue year month state);
+	set gag_zeros;
+run;
+	proc sort; by schedule ;
+	run;
+
+	proc export data=gag_handline_U
 				outfile="W:\SEDAR\Updates2014\Gag\Indicies\CommHL\SA.SG.hline.U.csv"
 				dbms=csv
 				replace;
