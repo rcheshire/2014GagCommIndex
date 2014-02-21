@@ -62,7 +62,7 @@ dglm <- function (data.set, dist="gamma", J=FALSE, write=FALSE,
        if(minpos<2)
        {
           minpos <- 2
-          print("minpos argument set equal to 2 in order to stabilize jackknife routine.")
+          message("minpos argument set equal to 2 in order to stabilize jackknife routine.")
        }
        else minpos <- minpos
     }
@@ -313,9 +313,9 @@ while (min(all.freq) < minpos)
     names(posweights) <- rownames(posdat)
 
 # display the total number of records and pos. records that were deleted
-    print(paste(nrow(data.set.orig)-nrow(data.set),
+    message(paste(nrow(data.set.orig)-nrow(data.set),
         "(total) records were removed by filter."))
-    print(paste(nrow(allpos)-nrow(posdat),
+    message(paste(nrow(allpos)-nrow(posdat),
         "positive records removed by filter."))
 
 ### SECTION 3 ###
@@ -391,12 +391,12 @@ while (min(all.freq) < minpos)
         y.obs <- gamma.glm$model[[1]]
         if(lnorm.init==FALSE)
         {
-            print("Initializing Inv. Gaussian GLM with coefficients from gamma GLM.")
+            message("Initializing Inv. Gaussian GLM with coefficients from gamma GLM.")
             invgau.par <- c(ig.scale, coef(gamma.glm))
         }
         if(lnorm.init==TRUE)
         {
-            print("Initializing Inv. Gaussian GLM with coefficients from gaussian GLM for log y.")
+            message("Initializing Inv. Gaussian GLM with coefficients from gaussian GLM for log y.")
             invgau.par <- c(ig.scale, lnorm.coefs)
         }
         X <- model.matrix(gamma.glm)
@@ -429,8 +429,8 @@ while (min(all.freq) < minpos)
                                           )
                            )
 
-        if(invgau.fit$convergence == 1) print("Maximum number of iterations reached.")
-        if(invgau.fit$convergence != 0) print("Check convergence of inverse gaussian fit.")
+        if(invgau.fit$convergence == 1) message("Maximum number of iterations reached.")
+        if(invgau.fit$convergence != 0) message("Check convergence of inverse gaussian fit.")
         names(invgau.fit)[1] <- "parameters"
         names(invgau.fit[[1]]) <- c("scale", names(coef(gamma.glm)))
         names(invgau.fit)[2] <- "negative.log.likelihood"
@@ -487,7 +487,7 @@ while (min(all.freq) < minpos)
         # dimnames(obs.effect) <- list(c(1:jack), c("Observation", "SSQ"))
         for (j in 1:jack)
         {
-            print(paste("Starting jacknife #", j, "out of", jack))
+            message(paste("Starting jacknife #", j, "out of", jack))
             jdat <- data.set[-j, ]
             jposdat <- jdat[jdat[, 1] > 0, ]
             jposdat.names <- rownames(jposdat)
