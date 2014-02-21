@@ -34,7 +34,7 @@ The 2014 update of the SEDAR 10 (2006) South Atlantic gag stock assessment requi
 **Table 1.** Commercial handline trips through 2009 for all months (method1), through 2011 without Jan-Apr (method2), and through 2012 with only May-Sep (method3).
 
 <!-- html table generated in R 3.0.2 by xtable 1.7-1 package -->
-<!-- Thu Feb 20 17:36:44 2014 -->
+<!-- Fri Feb 21 12:22:34 2014 -->
 <TABLE border=1>
 <TR> <TH> year </TH> <TH> method1 </TH> <TH> method2 </TH> <TH> method3 </TH>  </TR>
   <TR> <TD align="right"> 1993 </TD> <TD align="right"> 1757 </TD> <TD align="right"> 1524 </TD> <TD align="right"> 996 </TD> </TR>
@@ -61,13 +61,6 @@ The 2014 update of the SEDAR 10 (2006) South Atlantic gag stock assessment requi
 
 
 
-```
-## elapsed time is 133.290000 seconds
-```
-
-```
-## elapsed time is 13.930000 seconds
-```
 
 Figure 1.  Method 1:  Estimates of species-specific regression coefficients used to estimate a trip's probability of catching gag.
 
@@ -81,72 +74,16 @@ Figure 2.  Method 1:  Absolute difference between observed and predicted number 
 
 
 
-```
-## Start:  AIC=207649
-## cpue ~ year + month + STATE
-## 
-##         Df Deviance    AIC
-## <none>      1421601 207649
-## - year  16  1433836 207884
-## - month  9  1442646 208089
-## - STATE  2  1587651 211089
-```
-
-```
-## Start:  AIC=120620
-## cpue ~ year + month + STATE
-## 
-##         Df Deviance    AIC
-## <none>        57419 120620
-## - year  16    58301 120780
-## - month  9    58844 120912
-## - STATE  2    70442 123448
-```
-
-```
-## Start:  AIC=41157
-## cpue ~ year + month + STATE
-## 
-##         Df Deviance   AIC
-## <none>        41101 41157
-## - STATE  2    41165 41217
-## - month  9    41278 41316
-## - year  16    41501 41525
-```
-
-```
-## [1] "0 (total) records were removed by filter."
-## [1] "0 positive records removed by filter."
-```
-
-```
-## [1] "0 (total) records were removed by filter."
-## [1] "0 positive records removed by filter."
-```
-
-```
-##                    [,1]
-## AIC.binomial  4.116e+04
-## AIC.lognormal 1.160e+05
-## sigma.mle     1.452e+00
-```
-
-```
-##                   [,1]
-## AIC.binomial 4.116e+04
-## AIC.gamma    1.198e+05
-## shape.mle    6.616e-01
-```
 
 
 
 
 ```
-## elapsed time is 125.000000 seconds
+## elapsed time is 127.280000 seconds
 ```
 
 ```
-## elapsed time is 13.320000 seconds
+## elapsed time is 13.190000 seconds
 ```
 
 Figure 3.  Method 2: Estimates of species-specific regression coefficients used to estimate a trip's probability of catching gag.
@@ -161,75 +98,15 @@ Figure 4.  Method 2: Absolute difference between observed and predicted number o
 
 
 
-```
-## Error: undefined columns selected
-```
-
-```
-## Start:  AIC=193893
-## cpue ~ year + month + STATE
-## 
-##         Df Deviance    AIC
-## <none>      1376800 193893
-## - year  18  1396274 194263
-## - month  7  1397844 194317
-## - STATE  2  1539077 197112
-```
-
-```
-## Start:  AIC=112025
-## cpue ~ year + month + STATE
-## 
-##         Df Deviance    AIC
-## <none>        54119 112025
-## - year  18    55352 112255
-## - month  7    55352 112277
-## - STATE  2    66446 114688
-```
-
-```
-## Start:  AIC=38525
-## cpue ~ year + month + STATE
-## 
-##         Df Deviance   AIC
-## <none>        38469 38525
-## - STATE  2    38584 38636
-## - month  7    38639 38681
-## - year  18    38849 38869
-```
-
-```
-## [1] "0 (total) records were removed by filter."
-## [1] "0 positive records removed by filter."
-```
-
-```
-## [1] "0 (total) records were removed by filter."
-## [1] "0 positive records removed by filter."
-```
-
-```
-##                    [,1]
-## AIC.binomial  3.852e+04
-## AIC.lognormal 1.077e+05
-## sigma.mle     1.467e+00
-```
-
-```
-##                   [,1]
-## AIC.binomial 3.852e+04
-## AIC.gamma    1.113e+05
-## shape.mle    6.525e-01
-```
 
 
 
 ```
-## elapsed time is 89.370000 seconds
+## elapsed time is 90.060000 seconds
 ```
 
 ```
-## elapsed time is 9.500000 seconds
+## elapsed time is 9.120000 seconds
 ```
 
 Figure 5.  Method 3: Estimates of species-specific regression coefficients used to estimate a trip's probability of catching gag.
@@ -244,86 +121,7 @@ Figure 6.  Method 3: Absolute difference between observed and predicted number o
 
 
 
-```
-## Error: undefined columns selected
-```
-
-```
-## Start:  AIC=120837
-## cpue ~ year + month + STATE
-## 
-##         Df Deviance    AIC
-## <none>       607735 120837
-## - month  4   609855 120896
-## - year  19   618969 121150
-## - STATE  2   661172 122450
-```
-
-```
-## Start:  AIC=65874
-## cpue ~ year + month + STATE
-## 
-##         Df Deviance   AIC
-## <none>        35446 65874
-## - month  4    35652 65909
-## - year  19    36606 66081
-## - STATE  2    42070 67271
-```
-
-```
-## Start:  AIC=26379
-## cpue ~ year + month + STATE
-## 
-##         Df Deviance   AIC
-## <none>        26327 26379
-## - STATE  2    26393 26441
-## - month  4    26440 26484
-## - year  19    26695 26709
-```
-
-```
-## [1] "0 (total) records were removed by filter."
-## [1] "0 positive records removed by filter."
-```
-
-```
-## [1] "0 (total) records were removed by filter."
-## [1] "0 positive records removed by filter."
-```
-
-```
-##                    [,1]
-## AIC.binomial  26378.502
-## AIC.lognormal 62411.200
-## sigma.mle         1.433
-```
-
-```
-##                   [,1]
-## AIC.binomial 2.638e+04
-## AIC.gamma    6.538e+04
-## shape.mle    6.599e-01
-```
 
 Figure 7.  Estimated index for all three methods using a lognormal error distribution.
-
-```
-## Error: object 'gaggm3.ln' not found
-```
-
-```
-## Error: object 'gaggm3.ln' not found
-```
-
-```
-## Error: object 'gaggm2.ln' not found
-```
-
-```
-## Error: object 'gaggm1.ln' not found
-```
-
-```
-## Error: plot.new has not been called yet
-```
+![plot of chunk compareMethods](figure/compareMethods.png) 
 
