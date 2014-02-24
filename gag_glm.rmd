@@ -216,6 +216,7 @@ plot(prob.trp[550:650],abs.dif[550:650]/1000,type="l",
      xlab="Probability", ylab="Abs. error (1000)")
 savePlot(file="minimum.pdf",type="pdf")
 savePlot(file="minimum.png",type="png")
+par(mfcol=c(1,1))
 ```
 
 ```{r setupGLMm1,warning=FALSE,message=FALSE,results='hide',echo=FALSE, error=FALSE}
@@ -238,6 +239,7 @@ dat$year=as.factor(dat$year)
 dat$month=as.factor(dat$month)
 dat$STATE=as.factor(dat$STATE)
 dat$stbymon=as.factor(dat$stbymon)
+
 
 dat.pos=dat[which(dat[,"cpue"]>0),] 
 #compare lognormal to gamma and determine factors to include
@@ -427,6 +429,7 @@ dat$year=as.factor(dat$year)
 dat$month=as.factor(dat$month)
 dat$STATE=as.factor(dat$STATE)
 dat$stbymon=as.factor(dat$stbymon)
+final.dat=dat
 
 dat.pos=dat[which(dat[,"cpue"]>0),] 
 #compare lognormal to gamma and determine factors to include
@@ -830,4 +833,140 @@ legend('topleft',lty=c(1,1,1,3,1),lwd=c(2,2,2,2,2), col=c('blue','darkorange','d
 #savePlot(file="compareMethods.png",type="png")
 
 ```
-Method 2 allows the commercial handline index to extend to 2011 and matches the trend in the index when January and February are included.  Method 3 deviates from the trend in the index when October through December are included, especially at the end of the series.  The influence of the 2012 closure in method 4 was cause for concern.  For these reasons, method 2, May to September index through 2011 was chosen for input to the update of the SEDAR 10 gag stock assessment.  
+Method 2 allows the commercial handline index to extend to 2011 and matches the trend in the index when January and February are included.  Method 3 deviates from the trend in the index when October through December are included, especially at the end of the series.  The influence of the 2012 closure in method 4 was cause for concern.  For these reasons, method 2, May to September index through 2011 was chosen for input to the update of the SEDAR 10 gag stock assessment.  The data were fit better using a lognormal distribution as compared to a gamma distribution for all methods.  The uncertainty in the estimates were calculated from 1000 bootstrap runs of the model.
+
+Figure 10. Diagnostics of lognormal model fits to positive CPUE data.  The histogram of empirical log CPUE, with the normal distribution (empirical mean and variance) overlaid.
+
+```{r logposresids,warning=FALSE,message=FALSE,echo=FALSE, error=FALSE}
+dat.pos=final.dat[which(final.dat[,"cpue"]>0),] 
+gagm2.ln=dglm(dat,dist="lognormal", write=T,types=c('C','F','F','F','F'))
+pos.resids=dr$positive.glm$residuals
+ds=deltalognormal.summary 
+dr=deltalognormal.results
+Ftest=anova(dr$positive.glm, test="F")
+yrs=as.numeric(row.names(ds$deltaGLM.index))
+mths=row.names(ds$effects$month)
+areas=row.names(ds$effects$STATE)
+stmnth=row.names(ds$effects$stbymon)
+
+# hist(dat.pos$cpue,breaks=40,freq=FALSE,right=TRUE,xlab='CPUE (whole pounds/hook-hour)',
+#      main='Gag pos commercial handline CPUE')     
+# savePlot(file="poshist.png",type="png")
+# savePlot(file="poshist.pdf",type="pdf")
+
+mu=mean(log(dat.pos$cpue)); sd=sd(log(dat.pos$cpue))
+m1=min(log(dat.pos$cpue)); m2=max(log(dat.pos$cpue)); xv=seq(m1,m2,by=0.01)
+d=dnorm(xv,mean=mu, sd=sd)
+hist(log(dat.pos$cpue),breaks=40,freq=FALSE,right=TRUE,xlab='Log CPUE (whole pounds/hook-hour)',main='Gag pos commercial CPUE') 
+            lines(xv,d, col="blue")
+  savePlot(file="histLogPos.png",type="png")
+  savePlot(file="histLogPos.pdf",type="pdf") 
+```
+Figure 11.  Quantile-quantile plot of residuals from the fitted model.
+```{r qqplot,warning=FALSE,message=FALSE,echo=FALSE, error=FALSE}
+qqnorm(pos.resids,main='Gag: log residuals (pos CPUE)')
+qqline(pos.resids)
+savePlot(file="qq.png",type="png")
+savePlot(file="qq.pdf",type="pdf")
+```
+
+
+```{r bootstrap,warning=FALSE,message=FALSE,echo=FALSE, error=FALSE}
+
+index=gagm2.ln$deltaGLM.index[1]
+years=1993:2011
+nyr=length(years)
+#bootstrap    custom modification to draw within year
+nBoot=1000 #number of bootstrap samples (residual resampling)
+boot.mat=matrix(0,nrow=nBoot,ncol=nyr)
+colnames(boot.mat)=years            
+#n.trips=nrow(bt.inp2)
+tripsbyyear=summaryBy(cpue~year,data=final.dat,FUN=length) #
+yrss=tripsbyyear[,2]                                      #
+#ind=1:n.trips  # define inside loop for each year
+for(i in 1:nBoot){
+print(paste("Starting bootstrap #", i, "out of",nBoot))
+for(j in 1:length(years)){
+tempyr=final.dat[final.dat$year==years[j],]
+ind=1:nrow(tempyr)
+row.sample=sample(x=ind,size=nrow(tempyr),replace=T)
+assign(paste("gag.inp2yr",j,sep=""),tempyr[row.sample,])
+}
+gag.inp2.new=rbind(gag.inp2yr1,gag.inp2yr2,gag.inp2yr3,gag.inp2yr4,gag.inp2yr5,gag.inp2yr6,
+  gag.inp2yr7,gag.inp2yr8,gag.inp2yr9,gag.inp2yr10,gag.inp2yr11,gag.inp2yr12,gag.inp2yr13,gag.inp2yr14,gag.inp2yr15,gag.inp2yr16,gag.inp2yr17,gag.inp2yr18,gag.inp2yr19)
+
+gag=dglm(gag.inp2.new,dist="lognormal",write=T,types=c('C','F','F','F','F'),j=T)
+boot.mat[i,]=gag$deltaGLM.index[,1]
+}
+```
+Figure 12.  Raw residuals of lognormal model fits to positive CPUE for year.  Box-and-whisker plots give first, second (median), and third quartiles, as well as limbs that extend approximately one interquartile range beyond the nearest quartile, and outliers (circles) beyond the limbs.  Sample size is given along the upper whisker.
+```{r yrresid,warning=FALSE,message=FALSE,echo=FALSE, error=FALSE}
+x=plot(dat.pos$year,pos.resids,main="Raw residuals (pos CPUE) - Year")
+text(c(1:length(x$n)),rep(1.5,length(x$n)),x$n,srt=90)
+savePlot(file="yearresid.png",type="png")                      
+savePlot(file="yearresid.pdf",type="pdf")
+```
+Figure 13.  Raw residuals of lognormal model fits to positive CPUE for month.  Sample size is given along the upper whisker.
+```{r monresid,warning=FALSE,message=FALSE,echo=FALSE, error=FALSE}
+x=plot(dat.pos$month,pos.resids,main="Raw residuals (pos CPUE) - Month")
+text(c(1:length(x$n)),rep(1.5,length(x$n)),x$n,srt=90)
+savePlot(file="monthresid.png",type="png")
+savePlot(file="monthresid.pdf",type="pdf")
+```
+
+Figure 14.  Raw residuals of lognormal model fits to positive CPUE for region.  Sample size is given along the upper whisker.
+
+```{r stateresid,warning=FALSE,message=FALSE,echo=FALSE, error=FALSE}
+x=plot(dat.pos$STATE,pos.resids,main="Raw residuals (pos CPUE) - State",xaxt="n")
+axis(side=1,at=c(1:3),c("GA.NFL","NC","SC"))
+text(c(1:length(x$n)),rep(1.5,length(x$n)),x$n,srt=90)
+savePlot(file="stateresid.png",type="png")
+savePlot(file="stateresid.pdf",type="pdf")
+```
+
+Figure 15.  Raw residuals of lognormal model fits to positive CPUE for region by month.  Sample size is given along the upper whisker.
+
+```{r yrresid,warning=FALSE,message=FALSE,echo=FALSE, error=FALSE}
+x=plot(dat.pos$stbymon,pos.resids,main="Raw residuals (pos CPUE) - Region by Month",xaxt="n")
+axis(side=1,at=c(1:24),c("NC-5","NC-6","NC-7","NC-8","NC-9","NC-10","NC-11","NC-12",
+                        "SC-5","SC-6","SC-7","SC-8","SC-9","SC-10","SC-11","SC-12",
+                        "Ga.NFL-5","Ga.NFL-6","Ga.NFL-7","Ga.NFL-8","Ga.NFL-9","Ga.NFL-10","Ga.NFL-11","Ga.NFL-12"))
+text(c(1:length(x$n)),rep(1.5,length(x$n)),x$n,srt=90)
+savePlot(file="stbymonresid.png",type="png")
+savePlot(file="stbymonresid.pdf",type="pdf")
+
+```
+
+```{r plotindex,warning=FALSE,message=FALSE,echo=FALSE, error=FALSE}
+#calculate annual standard deviation
+index=gagm2.ln$deltaGLM.index$index
+scaled.index=index/mean(index)
+#cv determined with z distribution
+error <- qt(0.975,df=dim(boot.mat)[1]-1)*apply(boot.mat,2,sd)/apply(boot.mat,2,mean)
+cv=apply(boot.mat,2,sd)/apply(boot.mat,2,mean)
+lower=scaled.index-error
+upper=scaled.index+error
+index.plot=cbind(years,lower,scaled.index,upper)
+colnames(index.plot)=c("years","lower","index","upper")
+index.plot=as.data.frame(index.plot)
+
+nom=summaryBy(cpue~year,data=final.dat,FUN=c(mean,length))
+nomcpue=nom$cpue.mean
+nomcpue.std=nom$cpue.mean/mean(nom$cpue.mean)
+N=nom$cpue.length
+U.std=scaled.index
+
+with(index.plot,errbar(years,index,yminus=lower,yplus=upper,ylab="CPUE (Pounds/hook-hour)",
+  main="Gag - Commercial Handline",xlab="",las=2,ylim=c(-0,3)))
+with(index.plot,lines(years,index,col="black",lwd=2))
+with(index.plot,lines(years,nomcpue.std,lty=2,lwd=2))
+legend("topleft",lty=c(1,2),lwd=c(2,2),legend=c("CPUE","Nominal CPUE"))
+savePlot(file="boot-index.png",type="png")      
+savePlot(file="boot-index.pdf",type="pdf")
+#save.image(file="gag-boot-out.Rdata")
+
+out=data.frame(years, N, nomcpue, nomcpue.std, U.std, cv)
+names(out)<-c("Year", "N", "Nominal CPUE", "Relative nominal", "Standardized CPUE", "CV")
+write.csv(out, file="gag.ll.lgbk.index.csv", quote=F, row.names=F)
+
+```
