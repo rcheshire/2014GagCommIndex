@@ -283,10 +283,9 @@ run;
 data SAGag.trip_speciesm4;
 	set SAGag.sa_sg_clean_handline;
 	keep schedule species;
-	*if year<2012;
 	if month>4;
 	proc sort; by schedule;
-	proc export data=SAGag.trip_speciesm2 
+	proc export data=SAGag.trip_speciesm4 
 				outfile="W:\SEDAR\Updates2014\Gag\Indicies\CommHL\tripspeciesm4.csv"
 				dbms=csv
 				replace;
