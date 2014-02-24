@@ -21,6 +21,8 @@ The 2014 update of the SEDAR 10 (2006) South Atlantic gag stock assessment requi
   *method2:  1993-2011 excluding Jan-Apr trips (allows for longer time series and accounts for spawning closure)
   
   *method3:  1993-2012 excluding Jan-Apr trips and Oct-Dec trips  (allows for full time series and removes bias associated with spawning closure and quota closure)
+  
+  *method4:  1993-2012 excluding Jan-Apr trips (same as method 2 except 2012 closure in October is ignored)
 
 
 
@@ -34,29 +36,29 @@ The 2014 update of the SEDAR 10 (2006) South Atlantic gag stock assessment requi
 **Table 1.** Commercial handline trips through 2009 for all months (method1), through 2011 without Jan-Apr (method2), and through 2012 with only May-Sep (method3).
 
 <!-- html table generated in R 3.0.2 by xtable 1.7-1 package -->
-<!-- Fri Feb 21 12:22:34 2014 -->
+<!-- Mon Feb 24 12:36:00 2014 -->
 <TABLE border=1>
-<TR> <TH> year </TH> <TH> method1 </TH> <TH> method2 </TH> <TH> method3 </TH>  </TR>
-  <TR> <TD align="right"> 1993 </TD> <TD align="right"> 1757 </TD> <TD align="right"> 1524 </TD> <TD align="right"> 996 </TD> </TR>
-  <TR> <TD align="right"> 1994 </TD> <TD align="right"> 2176 </TD> <TD align="right"> 1698 </TD> <TD align="right"> 1059 </TD> </TR>
-  <TR> <TD align="right"> 1995 </TD> <TD align="right"> 2339 </TD> <TD align="right"> 1876 </TD> <TD align="right"> 1236 </TD> </TR>
-  <TR> <TD align="right"> 1996 </TD> <TD align="right"> 2314 </TD> <TD align="right"> 1914 </TD> <TD align="right"> 1229 </TD> </TR>
-  <TR> <TD align="right"> 1997 </TD> <TD align="right"> 2156 </TD> <TD align="right"> 1820 </TD> <TD align="right"> 1144 </TD> </TR>
-  <TR> <TD align="right"> 1998 </TD> <TD align="right"> 2282 </TD> <TD align="right"> 1877 </TD> <TD align="right"> 1178 </TD> </TR>
-  <TR> <TD align="right"> 1999 </TD> <TD align="right"> 1705 </TD> <TD align="right"> 1475 </TD> <TD align="right"> 852 </TD> </TR>
-  <TR> <TD align="right"> 2000 </TD> <TD align="right"> 1503 </TD> <TD align="right"> 1365 </TD> <TD align="right"> 847 </TD> </TR>
-  <TR> <TD align="right"> 2001 </TD> <TD align="right"> 1746 </TD> <TD align="right"> 1554 </TD> <TD align="right"> 995 </TD> </TR>
-  <TR> <TD align="right"> 2002 </TD> <TD align="right"> 1897 </TD> <TD align="right"> 1679 </TD> <TD align="right"> 1036 </TD> </TR>
-  <TR> <TD align="right"> 2003 </TD> <TD align="right"> 1672 </TD> <TD align="right"> 1523 </TD> <TD align="right"> 952 </TD> </TR>
-  <TR> <TD align="right"> 2004 </TD> <TD align="right"> 1570 </TD> <TD align="right"> 1428 </TD> <TD align="right"> 834 </TD> </TR>
-  <TR> <TD align="right"> 2005 </TD> <TD align="right"> 1512 </TD> <TD align="right"> 1380 </TD> <TD align="right"> 934 </TD> </TR>
-  <TR> <TD align="right"> 2006 </TD> <TD align="right"> 1486 </TD> <TD align="right"> 1333 </TD> <TD align="right"> 845 </TD> </TR>
-  <TR> <TD align="right"> 2007 </TD> <TD align="right"> 1680 </TD> <TD align="right"> 1528 </TD> <TD align="right"> 971 </TD> </TR>
-  <TR> <TD align="right"> 2008 </TD> <TD align="right"> 1563 </TD> <TD align="right"> 1410 </TD> <TD align="right"> 908 </TD> </TR>
-  <TR> <TD align="right"> 2009 </TD> <TD align="right"> 1623 </TD> <TD align="right"> 1484 </TD> <TD align="right"> 1006 </TD> </TR>
-  <TR> <TD align="right"> 2010 </TD> <TD align="right"> NA </TD> <TD align="right"> 1456 </TD> <TD align="right"> 1001 </TD> </TR>
-  <TR> <TD align="right"> 2011 </TD> <TD align="right"> NA </TD> <TD align="right"> 1473 </TD> <TD align="right"> 986 </TD> </TR>
-  <TR> <TD align="right"> 2012 </TD> <TD align="right"> NA </TD> <TD align="right"> NA </TD> <TD align="right"> 1088 </TD> </TR>
+<TR> <TH> year </TH> <TH> method1 </TH> <TH> method2 </TH> <TH> method3 </TH> <TH> method4 </TH>  </TR>
+  <TR> <TD align="right"> 1993 </TD> <TD align="right"> 1757 </TD> <TD align="right"> 1524 </TD> <TD align="right"> 996 </TD> <TD align="right"> 1524 </TD> </TR>
+  <TR> <TD align="right"> 1994 </TD> <TD align="right"> 2176 </TD> <TD align="right"> 1698 </TD> <TD align="right"> 1059 </TD> <TD align="right"> 1698 </TD> </TR>
+  <TR> <TD align="right"> 1995 </TD> <TD align="right"> 2339 </TD> <TD align="right"> 1876 </TD> <TD align="right"> 1236 </TD> <TD align="right"> 1876 </TD> </TR>
+  <TR> <TD align="right"> 1996 </TD> <TD align="right"> 2314 </TD> <TD align="right"> 1914 </TD> <TD align="right"> 1229 </TD> <TD align="right"> 1914 </TD> </TR>
+  <TR> <TD align="right"> 1997 </TD> <TD align="right"> 2156 </TD> <TD align="right"> 1820 </TD> <TD align="right"> 1144 </TD> <TD align="right"> 1820 </TD> </TR>
+  <TR> <TD align="right"> 1998 </TD> <TD align="right"> 2282 </TD> <TD align="right"> 1877 </TD> <TD align="right"> 1178 </TD> <TD align="right"> 1877 </TD> </TR>
+  <TR> <TD align="right"> 1999 </TD> <TD align="right"> 1705 </TD> <TD align="right"> 1475 </TD> <TD align="right"> 852 </TD> <TD align="right"> 1475 </TD> </TR>
+  <TR> <TD align="right"> 2000 </TD> <TD align="right"> 1503 </TD> <TD align="right"> 1365 </TD> <TD align="right"> 847 </TD> <TD align="right"> 1365 </TD> </TR>
+  <TR> <TD align="right"> 2001 </TD> <TD align="right"> 1746 </TD> <TD align="right"> 1554 </TD> <TD align="right"> 995 </TD> <TD align="right"> 1554 </TD> </TR>
+  <TR> <TD align="right"> 2002 </TD> <TD align="right"> 1897 </TD> <TD align="right"> 1679 </TD> <TD align="right"> 1036 </TD> <TD align="right"> 1679 </TD> </TR>
+  <TR> <TD align="right"> 2003 </TD> <TD align="right"> 1672 </TD> <TD align="right"> 1523 </TD> <TD align="right"> 952 </TD> <TD align="right"> 1523 </TD> </TR>
+  <TR> <TD align="right"> 2004 </TD> <TD align="right"> 1570 </TD> <TD align="right"> 1428 </TD> <TD align="right"> 834 </TD> <TD align="right"> 1428 </TD> </TR>
+  <TR> <TD align="right"> 2005 </TD> <TD align="right"> 1512 </TD> <TD align="right"> 1380 </TD> <TD align="right"> 934 </TD> <TD align="right"> 1380 </TD> </TR>
+  <TR> <TD align="right"> 2006 </TD> <TD align="right"> 1486 </TD> <TD align="right"> 1333 </TD> <TD align="right"> 845 </TD> <TD align="right"> 1333 </TD> </TR>
+  <TR> <TD align="right"> 2007 </TD> <TD align="right"> 1680 </TD> <TD align="right"> 1528 </TD> <TD align="right"> 971 </TD> <TD align="right"> 1528 </TD> </TR>
+  <TR> <TD align="right"> 2008 </TD> <TD align="right"> 1563 </TD> <TD align="right"> 1410 </TD> <TD align="right"> 908 </TD> <TD align="right"> 1410 </TD> </TR>
+  <TR> <TD align="right"> 2009 </TD> <TD align="right"> 1623 </TD> <TD align="right"> 1484 </TD> <TD align="right"> 1006 </TD> <TD align="right"> 1484 </TD> </TR>
+  <TR> <TD align="right"> 2010 </TD> <TD align="right"> NA </TD> <TD align="right"> 1456 </TD> <TD align="right"> 1001 </TD> <TD align="right"> 1456 </TD> </TR>
+  <TR> <TD align="right"> 2011 </TD> <TD align="right"> NA </TD> <TD align="right"> 1473 </TD> <TD align="right"> 986 </TD> <TD align="right"> 1473 </TD> </TR>
+  <TR> <TD align="right"> 2012 </TD> <TD align="right"> NA </TD> <TD align="right"> NA </TD> <TD align="right"> 1088 </TD> <TD align="right"> 1201 </TD> </TR>
    </TABLE>
 
 
@@ -79,11 +81,11 @@ Figure 2.  Method 1:  Absolute difference between observed and predicted number 
 
 
 ```
-## elapsed time is 127.280000 seconds
+## elapsed time is 125.490000 seconds
 ```
 
 ```
-## elapsed time is 13.190000 seconds
+## elapsed time is 41.790000 seconds
 ```
 
 Figure 3.  Method 2: Estimates of species-specific regression coefficients used to estimate a trip's probability of catching gag.
@@ -102,11 +104,11 @@ Figure 4.  Method 2: Absolute difference between observed and predicted number o
 
 
 ```
-## elapsed time is 90.060000 seconds
+## elapsed time is 90.650000 seconds
 ```
 
 ```
-## elapsed time is 9.120000 seconds
+## elapsed time is 39.830000 seconds
 ```
 
 Figure 5.  Method 3: Estimates of species-specific regression coefficients used to estimate a trip's probability of catching gag.
@@ -122,6 +124,29 @@ Figure 6.  Method 3: Absolute difference between observed and predicted number o
 
 
 
-Figure 7.  Estimated index for all three methods using a lognormal error distribution.
+
+
+```
+## elapsed time is 128.320000 seconds
+```
+
+```
+## elapsed time is 12.690000 seconds
+```
+
+Figure 7.  Method 4: Estimates of species-specific regression coefficients used to estimate a trip's probability of catching gag.
+
+
+
+![plot of chunk regcoeffPlotm4](figure/regcoeffPlotm4.png) 
+
+Figure 8.  Method 4: Absolute difference between observed and predicted number of positive gag trips.  Left and right panels differ only in the range of probabilities shown.
+
+![plot of chunk probabilitym4](figure/probabilitym4.png) 
+
+
+
+
+Figure 9.  Estimated index for the four methods using a lognormal error distribution.
 ![plot of chunk compareMethods](figure/compareMethods.png) 
 

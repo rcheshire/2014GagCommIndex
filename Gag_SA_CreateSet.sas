@@ -248,6 +248,49 @@ data SAGag.trip_species;
 				dbms=csv
 				replace;
 run;
+data SAGag.trip_speciesm1;
+	set SAGag.sa_sg_clean_handline;
+	keep schedule species;
+	if year<2010;
+	proc sort; by schedule;
+	proc export data=SAGag.trip_speciesm1 
+				outfile="W:\SEDAR\Updates2014\Gag\Indicies\CommHL\tripspeciesm1.csv"
+				dbms=csv
+				replace;
+run;
+data SAGag.trip_speciesm2;
+	set SAGag.sa_sg_clean_handline;
+	keep schedule species;
+	if year<2012;
+	if month>4;
+	proc sort; by schedule;
+	proc export data=SAGag.trip_speciesm2 
+				outfile="W:\SEDAR\Updates2014\Gag\Indicies\CommHL\tripspeciesm2.csv"
+				dbms=csv
+				replace;
+run;
+data SAGag.trip_speciesm3;
+	set SAGag.sa_sg_clean_handline;
+	keep schedule species;
+	if month>4;
+	if month<10;
+	proc sort; by schedule;
+	proc export data=SAGag.trip_speciesm3 
+				outfile="W:\SEDAR\Updates2014\Gag\Indicies\CommHL\tripspeciesm3.csv"
+				dbms=csv
+				replace;
+run;
+data SAGag.trip_speciesm4;
+	set SAGag.sa_sg_clean_handline;
+	keep schedule species;
+	*if year<2012;
+	if month>4;
+	proc sort; by schedule;
+	proc export data=SAGag.trip_speciesm2 
+				outfile="W:\SEDAR\Updates2014\Gag\Indicies\CommHL\tripspeciesm4.csv"
+				dbms=csv
+				replace;
+run;
 
 data gag_pos;
 	set SAGag.sa_sg_clean_handline;	
