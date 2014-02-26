@@ -38,6 +38,7 @@ require(xtable)
 library(matlab)
 source('sort.data.frame.r')
 source("DeltaGLM-1-7-2-KWS.r")
+op=par()
 input='W:/SEDAR/Updates2014/Gag/Indicies/CommHL'
 #cpue values from SEDAR10
 s10indexYr=1993:2004
@@ -49,6 +50,8 @@ s10indexPred=c(0.86,1.03,1.06,0.92,0.83,0.86,0.98,1.02,0.95,1.05,1.24,1.32)
 s10indexPred=s10indexPred/mean(s10indexPred)
 #  read in data set created by SAS
 gagtrips=read.csv(paste(input,'landbymonth.csv',sep='/'),header=TRUE)
+#NMFS species codes
+NMFSspp.codes=read.csv('W:/SEDAR/Updates2014/Gag/Indicies/CommHL/NMFSsppcodes.csv',header=T)
 #create trip sample size for each method
 method1=summaryBy(X_FREQ_~year,data=gagtrips[gagtrips$month%in%c(1,4,5,6,7,8,9,10,11,12),],FUN=sum)
 colnames(method1)=c('year','method1')
@@ -84,7 +87,7 @@ print(sstable,type="html",include.rownames=FALSE)
 
 ####################METHOD 1. Jan,Feb, May,Jun,JUl,Aug,Sept,Oct,Nov,Dec through 2009##########
 dat=read.csv('W:/SEDAR/Updates2014/Gag/Indicies/CommHL/tripspeciesm1.csv',header=T)
-NMFSspp.codes=read.csv('W:/SEDAR/Updates2014/Gag/Indicies/CommHL/NMFSsppcodes.csv',header=T)
+
 spp.codes=sort.data.frame(NMFSspp.codes,~sppcode)
 
 trips=unique(dat$SCHEDULE)
@@ -108,10 +111,10 @@ for (i in 2:nrow(dat)) {
     }
 
 }
-toc()
+toc(echo=FALSE)
 tic()
 write.table(mat,file='W:/SEDAR/Updates2014/Gag/Indicies/CommHL/lgbkm1.dat',quote=F,sep=",")
-toc()
+toc(echo=FALSE)
 
 #Fit logistic regression to select trips that may have caught focal species
 #Implement method from Stephens and McCall.2004. Fisheries Research.
@@ -194,8 +197,9 @@ coeff=sort(fit$coefficients[-1], decreasing=T)
 windows(width=10,height=8,record=T)
 par(las=2,cex.lab=1.0,oma=c(0,15,0,0))
 barplot(coeff,horiz=T,xlim=c(-1.0,1), xlab='Regression coefficient')
-savePlot(file="sppcorr.pdf",type="pdf")
-savePlot(file="sppcorr.png",type="png")
+pdf(file="sppcorr.pdf")
+par=op
+#savePlot(file="sppcorr.png",type="png")
 
 ```
 Figure 2.  Method 1:  Absolute difference between observed and predicted number of positive gag trips.  Left and right panels differ only in the range of probabilities shown.
@@ -214,9 +218,11 @@ plot(prob.trp,abs.dif/1000,type="l",xlab="Probability",main="",ylab="Abs. error 
 min.prob=mean(prob.trp[abs.dif==min(abs.dif)]) #mean in case min is not unique
 plot(prob.trp[550:650],abs.dif[550:650]/1000,type="l",
      xlab="Probability", ylab="Abs. error (1000)")
-savePlot(file="minimum.pdf",type="pdf")
-savePlot(file="minimum.png",type="png")
+pdf(file="minimum.pdf")
+#savePlot(file="minimum.png",type="png")
 par(mfcol=c(1,1))
+par=op
+
 ```
 
 ```{r setupGLMm1,warning=FALSE,message=FALSE,results='hide',echo=FALSE, error=FALSE}
@@ -298,10 +304,10 @@ for (i in 2:nrow(dat)) {
     }
 
 }
-toc()
+toc(echo=FALSE)
 tic()
 write.table(mat,file='W:/SEDAR/Updates2014/Gag/Indicies/CommHL/lgbkm2.dat',quote=F,sep=",")
-toc()
+toc(echo=FALSE)
 
 #Fit logistic regression to select trips that may have caught focal species
 #Implement method from Stephens and McCall.2004. Fisheries Research.
@@ -384,8 +390,9 @@ coeff=sort(fit$coefficients[-1], decreasing=T)
 windows(width=10,height=8,record=T)
 par(las=2,cex.lab=1.0,oma=c(0,15,0,0))
 barplot(coeff,horiz=T,xlim=c(-1.0,1), xlab='Regression coefficient')
-savePlot(file="sppcorr2.pdf",type="pdf")
-savePlot(file="sppcorr2.png",type="png")
+pdf(file="sppcorr2.pdf")
+#savePlot(file="sppcorr2.png",type="png")
+par=op
 
 ```
 Figure 4.  Method 2: Absolute difference between observed and predicted number of positive gag trips.  Left and right panels differ only in the range of probabilities shown.
@@ -404,8 +411,10 @@ plot(prob.trp,abs.dif/1000,type="l",xlab="Probability",main="",ylab="Abs. error 
 min.prob=mean(prob.trp[abs.dif==min(abs.dif)]) #mean in case min is not unique
 plot(prob.trp[550:650],abs.dif[550:650]/1000,type="l",
      xlab="Probability", ylab="Abs. error (1000)")
-savePlot(file="minimum2.pdf",type="pdf")
-savePlot(file="minimum2.png",type="png")
+pdf(file="minimum2.pdf")
+#savePlot(file="minimum2.png",type="png")
+par(mfcol=c(1,1))
+par=op
 ```
 
 ```{r setupGLMm2,warning=FALSE,message=FALSE,results='hide',echo=FALSE, error=FALSE}
@@ -482,10 +491,10 @@ for (i in 2:nrow(dat)) {
     }
 
 }
-toc()
+toc(echo=FALSE)
 tic()
 write.table(mat,file='W:/SEDAR/Updates2014/Gag/Indicies/CommHL/lgbkm3.dat',quote=F,sep=",")
-toc()
+toc(echo=FALSE)
 
 #Fit logistic regression to select trips that may have caught focal species
 #Implement method from Stephens and McCall.2004. Fisheries Research.
@@ -568,8 +577,9 @@ coeff=sort(fit$coefficients[-1], decreasing=T)
 windows(width=10,height=8,record=T)
 par(las=2,cex.lab=1.0,oma=c(0,15,0,0))
 barplot(coeff,horiz=T,xlim=c(-1.0,1), xlab='Regression coefficient')
-savePlot(file="sppcorr3.pdf",type="pdf")
-savePlot(file="sppcorr3.png",type="png")
+pdf(file="sppcorr3.pdf")
+#savePlot(file="sppcorr3.png",type="png")
+par=op
 
 ```
 Figure 6.  Method 3: Absolute difference between observed and predicted number of positive gag trips.  Left and right panels differ only in the range of probabilities shown.
@@ -588,8 +598,10 @@ plot(prob.trp,abs.dif/1000,type="l",xlab="Probability",main="",ylab="Abs. error 
 min.prob=mean(prob.trp[abs.dif==min(abs.dif)]) #mean in case min is not unique
 plot(prob.trp[550:650],abs.dif[550:650]/1000,type="l",
      xlab="Probability", ylab="Abs. error (1000)")
-savePlot(file="minimum3.pdf",type="pdf")
-savePlot(file="minimum3.png",type="png")
+pdf(file="minimum3.pdf")
+#savePlot(file="minimum3.png",type="png")
+par(mfcol=c(1,1))
+par=op
 ```
 
 ```{r setupGLMm3,warning=FALSE,message=FALSE,echo=FALSE,results='hide', error=FALSE}
@@ -665,10 +677,10 @@ for (i in 2:nrow(dat)) {
     }
 
 }
-toc()
+toc(echo=FALSE)
 tic()
 write.table(mat,file='W:/SEDAR/Updates2014/Gag/Indicies/CommHL/lgbkm4.dat',quote=F,sep=",")
-toc()
+toc(echo=FALSE)
 
 #Fit logistic regression to select trips that may have caught focal species
 #Implement method from Stephens and McCall.2004. Fisheries Research.
@@ -751,8 +763,9 @@ coeff=sort(fit$coefficients[-1], decreasing=T)
 windows(width=10,height=8,record=T)
 par(las=2,cex.lab=1.0,oma=c(0,15,0,0))
 barplot(coeff,horiz=T,xlim=c(-1.0,1), xlab='Regression coefficient')
-savePlot(file="sppcorr4.pdf",type="pdf")
-savePlot(file="sppcorr4.png",type="png")
+pdf(file="sppcorr4.pdf")
+#savePlot(file="sppcorr4.png",type="png")
+par=op
 
 ```
 Figure 8.  Method 4: Absolute difference between observed and predicted number of positive gag trips.  Left and right panels differ only in the range of probabilities shown.
@@ -771,8 +784,10 @@ plot(prob.trp,abs.dif/1000,type="l",xlab="Probability",main="",ylab="Abs. error 
 min.prob=mean(prob.trp[abs.dif==min(abs.dif)]) #mean in case min is not unique
 plot(prob.trp[550:650],abs.dif[550:650]/1000,type="l",
      xlab="Probability", ylab="Abs. error (1000)")
-savePlot(file="minimum4.pdf",type="pdf")
-savePlot(file="minimum4.png",type="png")
+pdf(file="minimum4.pdf")
+#savePlot(file="minimum4.png",type="png")
+par(mfcol=c(1,1))
+par=op
 ```
 
 ```{r setupGLMm4,warning=FALSE,message=FALSE,results='hide',echo=FALSE, error=FALSE}
@@ -829,7 +844,7 @@ lines(rownames(gagm2.ln$deltaGLM.index),gagm2.ln$deltaGLM.index$index/mean(gagm2
 lines(rownames(gagm1.ln$deltaGLM.index),gagm1.ln$deltaGLM.index$index/mean(gagm1.ln$deltaGLM.index$index),lty=1,lwd=2,col='darkgreen')
 lines(s10indexYr,s10index,lty=1,lwd=2,col='red')
 legend('topleft',lty=c(1,1,1,3,1),lwd=c(2,2,2,2,2), col=c('blue','darkorange','darkgreen','magenta','red'),legend=c('method 3', 'method 2', 'method 1','method 4', 'SEDAR 10'))
-#savePlot(file="compareMethods.pdf",type="pdf")
+pdf(file="compareMethods.pdf")
 #savePlot(file="compareMethods.png",type="png")
 
 ```
@@ -840,9 +855,9 @@ Figure 10. Diagnostics of lognormal model fits to positive CPUE data.  The histo
 ```{r logposresids,warning=FALSE,message=FALSE,echo=FALSE, error=FALSE}
 dat.pos=final.dat[which(final.dat[,"cpue"]>0),] 
 gagm2.ln=dglm(dat,dist="lognormal", write=T,types=c('C','F','F','F','F'))
-pos.resids=dr$positive.glm$residuals
 ds=deltalognormal.summary 
 dr=deltalognormal.results
+pos.resids=dr$positive.glm$residuals
 Ftest=anova(dr$positive.glm, test="F")
 yrs=as.numeric(row.names(ds$deltaGLM.index))
 mths=row.names(ds$effects$month)
@@ -852,22 +867,22 @@ stmnth=row.names(ds$effects$stbymon)
 # hist(dat.pos$cpue,breaks=40,freq=FALSE,right=TRUE,xlab='CPUE (whole pounds/hook-hour)',
 #      main='Gag pos commercial handline CPUE')     
 # savePlot(file="poshist.png",type="png")
-# savePlot(file="poshist.pdf",type="pdf")
+# pdf(file="poshist.pdf")
 
 mu=mean(log(dat.pos$cpue)); sd=sd(log(dat.pos$cpue))
 m1=min(log(dat.pos$cpue)); m2=max(log(dat.pos$cpue)); xv=seq(m1,m2,by=0.01)
 d=dnorm(xv,mean=mu, sd=sd)
 hist(log(dat.pos$cpue),breaks=40,freq=FALSE,right=TRUE,xlab='Log CPUE (whole pounds/hook-hour)',main='Gag pos commercial CPUE') 
             lines(xv,d, col="blue")
-  savePlot(file="histLogPos.png",type="png")
-  savePlot(file="histLogPos.pdf",type="pdf") 
+ # savePlot(file="histLogPos.png",type="png")
+  pdf(file="histLogPos.pdf") 
 ```
 Figure 11.  Quantile-quantile plot of residuals from the fitted model.
 ```{r qqplot,warning=FALSE,message=FALSE,echo=FALSE, error=FALSE}
 qqnorm(pos.resids,main='Gag: log residuals (pos CPUE)')
 qqline(pos.resids)
-savePlot(file="qq.png",type="png")
-savePlot(file="qq.pdf",type="pdf")
+#savePlot(file="qq.png",type="png")
+pdf(file="qq.pdf")
 ```
 
 
@@ -877,7 +892,7 @@ index=gagm2.ln$deltaGLM.index[1]
 years=1993:2011
 nyr=length(years)
 #bootstrap    custom modification to draw within year
-nBoot=1000 #number of bootstrap samples (residual resampling)
+nBoot=5 #number of bootstrap samples (residual resampling)
 boot.mat=matrix(0,nrow=nBoot,ncol=nyr)
 colnames(boot.mat)=years            
 #n.trips=nrow(bt.inp2)
@@ -901,17 +916,18 @@ boot.mat[i,]=gag$deltaGLM.index[,1]
 ```
 Figure 12.  Raw residuals of lognormal model fits to positive CPUE for year.  Box-and-whisker plots give first, second (median), and third quartiles, as well as limbs that extend approximately one interquartile range beyond the nearest quartile, and outliers (circles) beyond the limbs.  Sample size is given along the upper whisker.
 ```{r yrresid,warning=FALSE,message=FALSE,echo=FALSE, error=FALSE}
+windows()
 x=plot(dat.pos$year,pos.resids,main="Raw residuals (pos CPUE) - Year")
 text(c(1:length(x$n)),rep(1.5,length(x$n)),x$n,srt=90)
-savePlot(file="yearresid.png",type="png")                      
-savePlot(file="yearresid.pdf",type="pdf")
+#savePlot(file="yearresid.png",type="png")                      
+pdf(file="yearresid.pdf")
 ```
 Figure 13.  Raw residuals of lognormal model fits to positive CPUE for month.  Sample size is given along the upper whisker.
 ```{r monresid,warning=FALSE,message=FALSE,echo=FALSE, error=FALSE}
 x=plot(dat.pos$month,pos.resids,main="Raw residuals (pos CPUE) - Month")
 text(c(1:length(x$n)),rep(1.5,length(x$n)),x$n,srt=90)
-savePlot(file="monthresid.png",type="png")
-savePlot(file="monthresid.pdf",type="pdf")
+#savePlot(file="monthresid.png",type="png")
+pdf(file="monthresid.pdf")
 ```
 
 Figure 14.  Raw residuals of lognormal model fits to positive CPUE for region.  Sample size is given along the upper whisker.
@@ -920,20 +936,20 @@ Figure 14.  Raw residuals of lognormal model fits to positive CPUE for region.  
 x=plot(dat.pos$STATE,pos.resids,main="Raw residuals (pos CPUE) - State",xaxt="n")
 axis(side=1,at=c(1:3),c("GA.NFL","NC","SC"))
 text(c(1:length(x$n)),rep(1.5,length(x$n)),x$n,srt=90)
-savePlot(file="stateresid.png",type="png")
-savePlot(file="stateresid.pdf",type="pdf")
+#savePlot(file="stateresid.png",type="png")
+pdf(file="stateresid.pdf")
 ```
 
 Figure 15.  Raw residuals of lognormal model fits to positive CPUE for region by month.  Sample size is given along the upper whisker.
 
-```{r yrresid,warning=FALSE,message=FALSE,echo=FALSE, error=FALSE}
+```{r stbymonresid,warning=FALSE,message=FALSE,echo=FALSE, error=FALSE}
 x=plot(dat.pos$stbymon,pos.resids,main="Raw residuals (pos CPUE) - Region by Month",xaxt="n")
 axis(side=1,at=c(1:24),c("NC-5","NC-6","NC-7","NC-8","NC-9","NC-10","NC-11","NC-12",
                         "SC-5","SC-6","SC-7","SC-8","SC-9","SC-10","SC-11","SC-12",
                         "Ga.NFL-5","Ga.NFL-6","Ga.NFL-7","Ga.NFL-8","Ga.NFL-9","Ga.NFL-10","Ga.NFL-11","Ga.NFL-12"))
 text(c(1:length(x$n)),rep(1.5,length(x$n)),x$n,srt=90)
-savePlot(file="stbymonresid.png",type="png")
-savePlot(file="stbymonresid.pdf",type="pdf")
+#savePlot(file="stbymonresid.png",type="png")
+pdf(file="stbymonresid.pdf")
 
 ```
 
@@ -961,8 +977,8 @@ with(index.plot,errbar(years,index,yminus=lower,yplus=upper,ylab="CPUE (Pounds/h
 with(index.plot,lines(years,index,col="black",lwd=2))
 with(index.plot,lines(years,nomcpue.std,lty=2,lwd=2))
 legend("topleft",lty=c(1,2),lwd=c(2,2),legend=c("CPUE","Nominal CPUE"))
-savePlot(file="boot-index.png",type="png")      
-savePlot(file="boot-index.pdf",type="pdf")
+#savePlot(file="boot-index.png",type="png")      
+pdf(file="boot-index.pdf")
 #save.image(file="gag-boot-out.Rdata")
 
 out=data.frame(years, N, nomcpue, nomcpue.std, U.std, cv)

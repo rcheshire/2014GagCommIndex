@@ -36,7 +36,7 @@ The 2014 update of the SEDAR 10 (2006) South Atlantic gag stock assessment requi
 **Table 1.** Commercial handline trips through 2009 for all months (method1), through 2011 without Jan-Apr (method2), and through 2012 with only May-Sep (method3).
 
 <!-- html table generated in R 3.0.2 by xtable 1.7-1 package -->
-<!-- Mon Feb 24 12:36:00 2014 -->
+<!-- Tue Feb 25 13:25:59 2014 -->
 <TABLE border=1>
 <TR> <TH> year </TH> <TH> method1 </TH> <TH> method2 </TH> <TH> method3 </TH> <TH> method4 </TH>  </TR>
   <TR> <TD align="right"> 1993 </TD> <TD align="right"> 1757 </TD> <TD align="right"> 1524 </TD> <TD align="right"> 996 </TD> <TD align="right"> 1524 </TD> </TR>
@@ -81,11 +81,13 @@ Figure 2.  Method 1:  Absolute difference between observed and predicted number 
 
 
 ```
-## elapsed time is 125.490000 seconds
+## elapsed 
+##   123.2
 ```
 
 ```
-## elapsed time is 41.790000 seconds
+## elapsed 
+##   15.22
 ```
 
 Figure 3.  Method 2: Estimates of species-specific regression coefficients used to estimate a trip's probability of catching gag.
@@ -104,11 +106,13 @@ Figure 4.  Method 2: Absolute difference between observed and predicted number o
 
 
 ```
-## elapsed time is 90.650000 seconds
+## elapsed 
+##   87.69
 ```
 
 ```
-## elapsed time is 39.830000 seconds
+## elapsed 
+##    8.94
 ```
 
 Figure 5.  Method 3: Estimates of species-specific regression coefficients used to estimate a trip's probability of catching gag.
@@ -127,11 +131,13 @@ Figure 6.  Method 3: Absolute difference between observed and predicted number o
 
 
 ```
-## elapsed time is 128.320000 seconds
+## elapsed 
+##     127
 ```
 
 ```
-## elapsed time is 12.690000 seconds
+## elapsed 
+##   13.45
 ```
 
 Figure 7.  Method 4: Estimates of species-specific regression coefficients used to estimate a trip's probability of catching gag.
@@ -149,4 +155,35 @@ Figure 8.  Method 4: Absolute difference between observed and predicted number o
 
 Figure 9.  Estimated index for the four methods using a lognormal error distribution.
 ![plot of chunk compareMethods](figure/compareMethods.png) 
+
+Method 2 allows the commercial handline index to extend to 2011 and matches the trend in the index when January and February are included.  Method 3 deviates from the trend in the index when October through December are included, especially at the end of the series.  The influence of the 2012 closure in method 4 was cause for concern.  For these reasons, method 2, May to September index through 2011 was chosen for input to the update of the SEDAR 10 gag stock assessment.  The data were fit better using a lognormal distribution as compared to a gamma distribution for all methods.  The uncertainty in the estimates were calculated from 1000 bootstrap runs of the model.
+
+Figure 10. Diagnostics of lognormal model fits to positive CPUE data.  The histogram of empirical log CPUE, with the normal distribution (empirical mean and variance) overlaid.
+
+![plot of chunk logposresids](figure/logposresids.png) 
+
+Figure 11.  Quantile-quantile plot of residuals from the fitted model.
+![plot of chunk qqplot](figure/qqplot.png) 
+
+
+
+
+```
+## [1] "Starting bootstrap # 1 out of 5"
+## [1] "Starting bootstrap # 2 out of 5"
+## [1] "Starting bootstrap # 3 out of 5"
+## [1] "Starting bootstrap # 4 out of 5"
+## [1] "Starting bootstrap # 5 out of 5"
+```
+
+Figure 12.  Raw residuals of lognormal model fits to positive CPUE for year.  Box-and-whisker plots give first, second (median), and third quartiles, as well as limbs that extend approximately one interquartile range beyond the nearest quartile, and outliers (circles) beyond the limbs.  Sample size is given along the upper whisker.
+
+
+
+
+
+
+
+
+
 
