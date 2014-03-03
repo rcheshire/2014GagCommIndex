@@ -31,7 +31,7 @@ The 2014 update of the SEDAR 10 (2006) South Atlantic gag stock assessment requi
 
 
 ```{r dataprep, warning=FALSE,message=FALSE,echo=FALSE, error=FALSE}
-windows(record=T,w=7,h=5.5)
+windows(record=T,w=7,h=7)
 library(MASS)
 require(doBy)
 require(xtable)
@@ -101,7 +101,7 @@ ind=1
 for (j in 1:length(spp.id)) {
     if (dat$species[1]==spp.id[j]) mat[ind,j]=1
 }
-tic()
+#tic()
 for (i in 2:nrow(dat)) {
     if (dat$SCHEDULE[i]!=dat$SCHEDULE[i-1]) {
         ind=ind+1
@@ -111,8 +111,8 @@ for (i in 2:nrow(dat)) {
     }
 
 }
-toc(echo=FALSE)
-tic()
+#toc()
+#tic(echo=FALSE)
 write.table(mat,file='W:/SEDAR/Updates2014/Gag/Indicies/CommHL/lgbkm1.dat',quote=F,sep=",")
 toc(echo=FALSE)
 
@@ -194,7 +194,7 @@ coeff=sort(fit$coefficients[-1], decreasing=T)
 ```
 
 ```{r regcoeffPlotm1,warning=FALSE,message=FALSE,echo=FALSE, error=FALSE}
-windows(width=10,height=8,record=T)
+windows(width=5,height=5,record=T)
 par(las=2,cex.lab=1.0,oma=c(0,15,0,0))
 barplot(coeff,horiz=T,xlim=c(-1.0,1), xlab='Regression coefficient')
 pdf(file="sppcorr.pdf")
@@ -212,7 +212,7 @@ num.postrips.pred=rep(0,length(prob.trp))
 for (i in 1:length(prob.trp)){num.postrips.pred[i]=gt.func(prob.trp[i])}
 
 abs.dif=abs(num.postrips.pred-totals[target.spp])
-windows(width=8,height=4,record=T)
+windows(width=7,height=5.5,record=T)
 par(mfcol=c(1,2),mar=c(4,4,1.5,0.5),las=2)
 plot(prob.trp,abs.dif/1000,type="l",xlab="Probability",main="",ylab="Abs. error (1000)")
 min.prob=mean(prob.trp[abs.dif==min(abs.dif)]) #mean in case min is not unique
@@ -294,7 +294,7 @@ ind=1
 for (j in 1:length(spp.id)) {
     if (dat$species[1]==spp.id[j]) mat[ind,j]=1
 }
-tic()
+#tic()
 for (i in 2:nrow(dat)) {
     if (dat$SCHEDULE[i]!=dat$SCHEDULE[i-1]) {
         ind=ind+1
@@ -304,10 +304,10 @@ for (i in 2:nrow(dat)) {
     }
 
 }
-toc(echo=FALSE)
-tic()
+#toc(echo=FALSE)
+#tic()
 write.table(mat,file='W:/SEDAR/Updates2014/Gag/Indicies/CommHL/lgbkm2.dat',quote=F,sep=",")
-toc(echo=FALSE)
+#toc(echo=FALSE)
 
 #Fit logistic regression to select trips that may have caught focal species
 #Implement method from Stephens and McCall.2004. Fisheries Research.
@@ -387,7 +387,7 @@ coeff=sort(fit$coefficients[-1], decreasing=T)
 ```
 
 ```{r regcoeffPlotm2,warning=FALSE,message=FALSE,echo=FALSE, error=FALSE}
-windows(width=10,height=8,record=T)
+windows(width=5,height=5,record=T)
 par(las=2,cex.lab=1.0,oma=c(0,15,0,0))
 barplot(coeff,horiz=T,xlim=c(-1.0,1), xlab='Regression coefficient')
 pdf(file="sppcorr2.pdf")
@@ -405,7 +405,7 @@ num.postrips.pred=rep(0,length(prob.trp))
 for (i in 1:length(prob.trp)){num.postrips.pred[i]=gt.func(prob.trp[i])}
 
 abs.dif=abs(num.postrips.pred-totals[target.spp])
-windows(width=8,height=4,record=T)
+windows(width=7,height=5.5,record=T)
 par(mfcol=c(1,2),mar=c(4,4,1.5,0.5),las=2)
 plot(prob.trp,abs.dif/1000,type="l",xlab="Probability",main="",ylab="Abs. error (1000)")
 min.prob=mean(prob.trp[abs.dif==min(abs.dif)]) #mean in case min is not unique
@@ -481,7 +481,7 @@ ind=1
 for (j in 1:length(spp.id)) {
     if (dat$species[1]==spp.id[j]) mat[ind,j]=1
 }
-tic()
+#tic()
 for (i in 2:nrow(dat)) {
     if (dat$SCHEDULE[i]!=dat$SCHEDULE[i-1]) {
         ind=ind+1
@@ -491,10 +491,10 @@ for (i in 2:nrow(dat)) {
     }
 
 }
-toc(echo=FALSE)
-tic()
+#toc()
+#tic()
 write.table(mat,file='W:/SEDAR/Updates2014/Gag/Indicies/CommHL/lgbkm3.dat',quote=F,sep=",")
-toc(echo=FALSE)
+#toc(echo=FALSE)
 
 #Fit logistic regression to select trips that may have caught focal species
 #Implement method from Stephens and McCall.2004. Fisheries Research.
@@ -574,7 +574,7 @@ coeff=sort(fit$coefficients[-1], decreasing=T)
 ```
 
 ```{r regcoeffPlotm3,warning=FALSE,message=FALSE,echo=FALSE, error=FALSE}
-windows(width=10,height=8,record=T)
+windows(width=5,height=5,record=T)
 par(las=2,cex.lab=1.0,oma=c(0,15,0,0))
 barplot(coeff,horiz=T,xlim=c(-1.0,1), xlab='Regression coefficient')
 pdf(file="sppcorr3.pdf")
@@ -592,7 +592,7 @@ num.postrips.pred=rep(0,length(prob.trp))
 for (i in 1:length(prob.trp)){num.postrips.pred[i]=gt.func(prob.trp[i])}
 
 abs.dif=abs(num.postrips.pred-totals[target.spp])
-windows(width=8,height=4,record=T)
+windows(width=7,height=5.5,record=T)
 par(mfcol=c(1,2),mar=c(4,4,1.5,0.5),las=2)
 plot(prob.trp,abs.dif/1000,type="l",xlab="Probability",main="",ylab="Abs. error (1000)")
 min.prob=mean(prob.trp[abs.dif==min(abs.dif)]) #mean in case min is not unique
@@ -667,7 +667,7 @@ ind=1
 for (j in 1:length(spp.id)) {
     if (dat$species[1]==spp.id[j]) mat[ind,j]=1
 }
-tic()
+#tic()
 for (i in 2:nrow(dat)) {
     if (dat$SCHEDULE[i]!=dat$SCHEDULE[i-1]) {
         ind=ind+1
@@ -677,10 +677,10 @@ for (i in 2:nrow(dat)) {
     }
 
 }
-toc(echo=FALSE)
-tic()
+#toc(echo=FALSE)
+#tic()
 write.table(mat,file='W:/SEDAR/Updates2014/Gag/Indicies/CommHL/lgbkm4.dat',quote=F,sep=",")
-toc(echo=FALSE)
+#toc(echo=FALSE)
 
 #Fit logistic regression to select trips that may have caught focal species
 #Implement method from Stephens and McCall.2004. Fisheries Research.
@@ -760,7 +760,7 @@ coeff=sort(fit$coefficients[-1], decreasing=T)
 ```
 
 ```{r regcoeffPlotm4,warning=FALSE,message=FALSE,echo=FALSE, error=FALSE}
-windows(width=10,height=8,record=T)
+windows(width=5,height=5,record=T)
 par(las=2,cex.lab=1.0,oma=c(0,15,0,0))
 barplot(coeff,horiz=T,xlim=c(-1.0,1), xlab='Regression coefficient')
 pdf(file="sppcorr4.pdf")
@@ -778,7 +778,7 @@ num.postrips.pred=rep(0,length(prob.trp))
 for (i in 1:length(prob.trp)){num.postrips.pred[i]=gt.func(prob.trp[i])}
 
 abs.dif=abs(num.postrips.pred-totals[target.spp])
-windows(width=8,height=4,record=T)
+windows(width=7,height=5.5,record=T)
 par(mfcol=c(1,2),mar=c(4,4,1.5,0.5),las=2)
 plot(prob.trp,abs.dif/1000,type="l",xlab="Probability",main="",ylab="Abs. error (1000)")
 min.prob=mean(prob.trp[abs.dif==min(abs.dif)]) #mean in case min is not unique
@@ -834,6 +834,7 @@ gagm4.gamma=dglm(dat,dist="gamma", write=T,types=c('C','F','F','F','F'))
 #check aic
 gagm4.ln$aic
 gagm4.gamma$aic
+windows(width=7,height=5.5,record=T)
 ```
 Figure 9.  Estimated index for the four methods using a lognormal error distribution.
 ```{r compareMethods,warning=FALSE,message=FALSE,echo=FALSE, error=FALSE}
@@ -853,8 +854,10 @@ Method 2 allows the commercial handline index to extend to 2011 and matches the 
 Figure 10. Diagnostics of lognormal model fits to positive CPUE data.  The histogram of empirical log CPUE, with the normal distribution (empirical mean and variance) overlaid.
 
 ```{r logposresids,warning=FALSE,message=FALSE,echo=FALSE, error=FALSE}
+
+windows(width=5,height=5,record=T)
 dat.pos=final.dat[which(final.dat[,"cpue"]>0),] 
-gagm2.ln=dglm(dat,dist="lognormal", write=T,types=c('C','F','F','F','F'))
+gagm2.ln=dglm(final.dat,dist="lognormal", write=T,types=c('C','F','F','F','F'))
 ds=deltalognormal.summary 
 dr=deltalognormal.results
 pos.resids=dr$positive.glm$residuals
@@ -879,6 +882,7 @@ hist(log(dat.pos$cpue),breaks=40,freq=FALSE,right=TRUE,xlab='Log CPUE (whole pou
 ```
 Figure 11.  Quantile-quantile plot of residuals from the fitted model.
 ```{r qqplot,warning=FALSE,message=FALSE,echo=FALSE, error=FALSE}
+windows(width=5,height=5,record=T)
 qqnorm(pos.resids,main='Gag: log residuals (pos CPUE)')
 qqline(pos.resids)
 #savePlot(file="qq.png",type="png")
@@ -887,12 +891,11 @@ pdf(file="qq.pdf")
 
 
 ```{r bootstrap,warning=FALSE,message=FALSE,echo=FALSE, error=FALSE}
-
 index=gagm2.ln$deltaGLM.index[1]
 years=1993:2011
 nyr=length(years)
 #bootstrap    custom modification to draw within year
-nBoot=5 #number of bootstrap samples (residual resampling)
+nBoot=1000 #number of bootstrap samples (residual resampling)
 boot.mat=matrix(0,nrow=nBoot,ncol=nyr)
 colnames(boot.mat)=years            
 #n.trips=nrow(bt.inp2)
@@ -900,7 +903,7 @@ tripsbyyear=summaryBy(cpue~year,data=final.dat,FUN=length) #
 yrss=tripsbyyear[,2]                                      #
 #ind=1:n.trips  # define inside loop for each year
 for(i in 1:nBoot){
-print(paste("Starting bootstrap #", i, "out of",nBoot))
+message(paste("Starting bootstrap #", i, "out of",nBoot))
 for(j in 1:length(years)){
 tempyr=final.dat[final.dat$year==years[j],]
 ind=1:nrow(tempyr)
@@ -916,14 +919,15 @@ boot.mat[i,]=gag$deltaGLM.index[,1]
 ```
 Figure 12.  Raw residuals of lognormal model fits to positive CPUE for year.  Box-and-whisker plots give first, second (median), and third quartiles, as well as limbs that extend approximately one interquartile range beyond the nearest quartile, and outliers (circles) beyond the limbs.  Sample size is given along the upper whisker.
 ```{r yrresid,warning=FALSE,message=FALSE,echo=FALSE, error=FALSE}
-windows()
-x=plot(dat.pos$year,pos.resids,main="Raw residuals (pos CPUE) - Year")
+windows(width=7,height=5.5,record=T)
+x=plot(dat.pos$year,pos.resids,main="Raw residuals (pos CPUE) - Year",las=2)
 text(c(1:length(x$n)),rep(1.5,length(x$n)),x$n,srt=90)
 #savePlot(file="yearresid.png",type="png")                      
 pdf(file="yearresid.pdf")
 ```
 Figure 13.  Raw residuals of lognormal model fits to positive CPUE for month.  Sample size is given along the upper whisker.
 ```{r monresid,warning=FALSE,message=FALSE,echo=FALSE, error=FALSE}
+windows(width=5,height=5,record=T)
 x=plot(dat.pos$month,pos.resids,main="Raw residuals (pos CPUE) - Month")
 text(c(1:length(x$n)),rep(1.5,length(x$n)),x$n,srt=90)
 #savePlot(file="monthresid.png",type="png")
@@ -933,6 +937,7 @@ pdf(file="monthresid.pdf")
 Figure 14.  Raw residuals of lognormal model fits to positive CPUE for region.  Sample size is given along the upper whisker.
 
 ```{r stateresid,warning=FALSE,message=FALSE,echo=FALSE, error=FALSE}
+windows(width=5,height=5,record=T)
 x=plot(dat.pos$STATE,pos.resids,main="Raw residuals (pos CPUE) - State",xaxt="n")
 axis(side=1,at=c(1:3),c("GA.NFL","NC","SC"))
 text(c(1:length(x$n)),rep(1.5,length(x$n)),x$n,srt=90)
@@ -943,7 +948,8 @@ pdf(file="stateresid.pdf")
 Figure 15.  Raw residuals of lognormal model fits to positive CPUE for region by month.  Sample size is given along the upper whisker.
 
 ```{r stbymonresid,warning=FALSE,message=FALSE,echo=FALSE, error=FALSE}
-x=plot(dat.pos$stbymon,pos.resids,main="Raw residuals (pos CPUE) - Region by Month",xaxt="n")
+windows(width=5,height=5,record=T)
+x=plot(dat.pos$stbymon,pos.resids,main="Raw residuals (pos CPUE) - Region by Month",xaxt="n",las=2)
 axis(side=1,at=c(1:24),c("NC-5","NC-6","NC-7","NC-8","NC-9","NC-10","NC-11","NC-12",
                         "SC-5","SC-6","SC-7","SC-8","SC-9","SC-10","SC-11","SC-12",
                         "Ga.NFL-5","Ga.NFL-6","Ga.NFL-7","Ga.NFL-8","Ga.NFL-9","Ga.NFL-10","Ga.NFL-11","Ga.NFL-12"))
@@ -954,6 +960,7 @@ pdf(file="stbymonresid.pdf")
 ```
 
 ```{r plotindex,warning=FALSE,message=FALSE,echo=FALSE, error=FALSE}
+windows(width=7,height=5.5,record=T)
 #calculate annual standard deviation
 index=gagm2.ln$deltaGLM.index$index
 scaled.index=index/mean(index)

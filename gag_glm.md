@@ -36,7 +36,7 @@ The 2014 update of the SEDAR 10 (2006) South Atlantic gag stock assessment requi
 **Table 1.** Commercial handline trips through 2009 for all months (method1), through 2011 without Jan-Apr (method2), and through 2012 with only May-Sep (method3).
 
 <!-- html table generated in R 3.0.2 by xtable 1.7-1 package -->
-<!-- Tue Feb 25 13:25:59 2014 -->
+<!-- Mon Mar 03 08:17:28 2014 -->
 <TABLE border=1>
 <TR> <TH> year </TH> <TH> method1 </TH> <TH> method2 </TH> <TH> method3 </TH> <TH> method4 </TH>  </TR>
   <TR> <TD align="right"> 1993 </TD> <TD align="right"> 1757 </TD> <TD align="right"> 1524 </TD> <TD align="right"> 996 </TD> <TD align="right"> 1524 </TD> </TR>
@@ -80,15 +80,6 @@ Figure 2.  Method 1:  Absolute difference between observed and predicted number 
 
 
 
-```
-## elapsed 
-##   123.2
-```
-
-```
-## elapsed 
-##   15.22
-```
 
 Figure 3.  Method 2: Estimates of species-specific regression coefficients used to estimate a trip's probability of catching gag.
 
@@ -105,15 +96,6 @@ Figure 4.  Method 2: Absolute difference between observed and predicted number o
 
 
 
-```
-## elapsed 
-##   87.69
-```
-
-```
-## elapsed 
-##    8.94
-```
 
 Figure 5.  Method 3: Estimates of species-specific regression coefficients used to estimate a trip's probability of catching gag.
 
@@ -130,15 +112,6 @@ Figure 6.  Method 3: Absolute difference between observed and predicted number o
 
 
 
-```
-## elapsed 
-##     127
-```
-
-```
-## elapsed 
-##   13.45
-```
 
 Figure 7.  Method 4: Estimates of species-specific regression coefficients used to estimate a trip's probability of catching gag.
 
@@ -168,22 +141,23 @@ Figure 11.  Quantile-quantile plot of residuals from the fitted model.
 
 
 
-```
-## [1] "Starting bootstrap # 1 out of 5"
-## [1] "Starting bootstrap # 2 out of 5"
-## [1] "Starting bootstrap # 3 out of 5"
-## [1] "Starting bootstrap # 4 out of 5"
-## [1] "Starting bootstrap # 5 out of 5"
-```
 
 Figure 12.  Raw residuals of lognormal model fits to positive CPUE for year.  Box-and-whisker plots give first, second (median), and third quartiles, as well as limbs that extend approximately one interquartile range beyond the nearest quartile, and outliers (circles) beyond the limbs.  Sample size is given along the upper whisker.
+![plot of chunk yrresid](figure/yrresid.png) 
+
+Figure 13.  Raw residuals of lognormal model fits to positive CPUE for month.  Sample size is given along the upper whisker.
+![plot of chunk monresid](figure/monresid.png) 
 
 
+Figure 14.  Raw residuals of lognormal model fits to positive CPUE for region.  Sample size is given along the upper whisker.
+
+![plot of chunk stateresid](figure/stateresid.png) 
 
 
+Figure 15.  Raw residuals of lognormal model fits to positive CPUE for region by month.  Sample size is given along the upper whisker.
+
+![plot of chunk stbymonresid](figure/stbymonresid.png) 
 
 
-
-
-
+![plot of chunk plotindex](figure/plotindex.png) 
 
